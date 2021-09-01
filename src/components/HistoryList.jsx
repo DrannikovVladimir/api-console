@@ -6,11 +6,11 @@ const HistoryList = () => {
   return (
     <>
       <HistoryItem>track.get</HistoryItem>
-      <HistoryItem>issue.send</HistoryItem>
+      {/* <HistoryItem>issue.send</HistoryItem>
       <HistoryItem>pong</HistoryItem>
       <HistoryItem>track.get</HistoryItem>
       <HistoryItem>stat.uni</HistoryItem>
-      <HistoryItem>sys.settings.get</HistoryItem>
+      <HistoryItem>sys.settings.get</HistoryItem> */}
     </>
   )
 };

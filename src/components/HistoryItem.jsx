@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Dropdown from 'src/components/Dropdown.jsx';
+
 const Item = styled.div`
   position: relative;
 
@@ -15,6 +17,7 @@ const Item = styled.div`
   background-color: #FFFFFF;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
 
+  cursor: pointer;
 
   &::before {
     content: '';
@@ -30,6 +33,10 @@ const Item = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.2);
 
     background-color: #30B800;
+  }
+
+  &:hover {
+    box-shadow: 0px 1px 4px 0px #00000040;
   }
 `;
 
@@ -66,6 +73,7 @@ const HistoryItem = ({children}) => {
       <ItemDropdown>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>
+      <Dropdown />
     </Item>
   )
 };
