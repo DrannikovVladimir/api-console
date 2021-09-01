@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
-import FormLogin from 'src/components/FormLogin.jsx';
+import FormLogin from '../components/FormLogin.jsx';
 
 const Wrapper = styled.div`
   height: 100%;

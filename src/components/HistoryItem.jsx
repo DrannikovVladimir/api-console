@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Dropdown from 'src/components/Dropdown.jsx';
+import Dropdown from './Dropdown.jsx';
 
 const Item = styled.div`
   position: relative;
@@ -73,7 +73,7 @@ const HistoryItem = ({children}) => {
       <ItemDropdown>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>
-      <Dropdown />
+      {/* <Dropdown /> */}
     </Item>
   )
 };

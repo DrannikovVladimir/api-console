@@ -5,7 +5,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 
-import {authenticate} from 'src/store/actions/auth';
+import {authenticate} from '../store/actions/auth';
+import Button from '../components/Button.jsx';
 
 const FormGroup = styled.div`
   display: flex;
@@ -38,45 +39,6 @@ const Input = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const Button = styled.button`
-  display: inline-block;
-  min-width: 110px;
-  min-height: 40px;
-  border: none;
-  border-radius: 5px;
-
-  font-weight: 50;
-  font-size: 16px;
-  text-align: center;
-  color: #FFFFFF;
-
-  background: linear-gradient(180deg, #45A6FF 0%, #0055FB 100%),
-    linear-gradient(0deg, #C4C4C4, #C4C4C4);
-
-  cursor: pointer;
-
-  &:hover {
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
-      linear-gradient(180deg, #45A6FF 0%, #0055FB 100%),
-      linear-gradient(0deg, #C4C4C4, #C4C4C4);
-  }
-
-  &:active {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-      linear-gradient(180deg, #45A6FF 0%, #0055FB 100%),
-      linear-gradient(0deg, #C4C4C4, #C4C4C4);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #45A5FF
-  }
-
-  &:disabled {
-    background: #C4C4C4;
   }
 `;
 

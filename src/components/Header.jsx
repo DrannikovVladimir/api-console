@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import {logout} from 'src/store/actions/auth';
+import {logout} from '../store/actions/auth';
 
 const Container = styled.div`
   display: flex;
@@ -77,19 +77,36 @@ const ButtonExit = styled.button`
 const ButtonFullScreen = styled.button`
   position: relative;
 
-  width: 18px;
-  height: 18px;
-  padding: 0;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
   margin: 0;
-  border: none;
+  border-radius: 7px;
+  border: 2px solid transparent;
 
   background-color: transparent;
-  background-image: url('/icons/full-screen.svg');
+  background-image: ${(props) => (!props.fullScreen
+    ? 'url(\'/icons/full-screen.svg\')'
+    : 'url(\'/icons/full-screen-close.svg\')')};
   background-repeat: no-repeat;
   background-size: 18px;
   background-position: center;
 
   cursor: pointer;
+
+  &:hover {
+    background-image: ${(props) => (props.fullScreen
+      ? 'url(\'/icons/full-screen-close-hover.svg\')'
+      : 'url(\'/icons/full-screen-hover.svg\')')};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(69, 165, 255, 0.5);
+    background-image: ${(props) => (props.fullScreen
+      ? 'url(\'/icons/full-screen-close-hover.svg\')'
+      : 'url(\'/icons/full-screen-hover.svg\');')}
+  };
 `;
 
 const Header = ({ handle }) => {
@@ -118,7 +135,11 @@ const Header = ({ handle }) => {
         {sublogin ? `${login} : ${sublogin}` : login}
       </UserAccount>
       <ButtonExit type="button" onClick={handleLogout}>Выйти</ButtonExit>
-      <ButtonFullScreen type="button" onClick={handleButtonClick}>
+      <ButtonFullScreen
+        fullScreen={handle.active}
+        type="button"
+        onClick={handleButtonClick}
+      >
         <span className="visually-hidden">Развернуть на полный экран</span>
       </ButtonFullScreen>
     </Container>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import HistoryList from 'src/components/HistoryList.jsx';
+import HistoryList from './HistoryList.jsx';
 
 const Container = styled.div`
   position: relative;
@@ -19,7 +19,7 @@ const Container = styled.div`
 
     position: absolute;
     top: 5px;
-    right: 50px;
+    right: 51px;
     bottom: 5px;
 
     width: 15px;

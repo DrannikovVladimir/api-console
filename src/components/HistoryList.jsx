@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HistoryItem from 'src/components/HistoryItem.jsx';
+import HistoryItem from './HistoryItem.jsx';
 
 const HistoryList = () => {
   return (
