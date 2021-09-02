@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {logout} from '../store/actions/auth';
+import FullscreenOpen from './icons/FullscreenOpen.jsx';
+import FullscreenClose from './icons/FullscreenClose';
 
 const Container = styled.div`
   display: flex;
@@ -54,6 +56,7 @@ const ButtonExit = styled.button`
 
   background-color: transparent;
 
+  color: #0D0D0D;
   cursor: pointer;
 
   &::before {
@@ -84,28 +87,20 @@ const ButtonFullScreen = styled.button`
   border-radius: 7px;
   border: 2px solid transparent;
 
+  color: #0D0D0D;
   background-color: transparent;
-  background-image: ${(props) => (!props.fullScreen
-    ? 'url(\'/icons/full-screen.svg\')'
-    : 'url(\'/icons/full-screen-close.svg\')')};
-  background-repeat: no-repeat;
-  background-size: 18px;
-  background-position: center;
 
   cursor: pointer;
 
   &:hover {
-    background-image: ${(props) => (props.fullScreen
-      ? 'url(\'/icons/full-screen-close-hover.svg\')'
-      : 'url(\'/icons/full-screen-hover.svg\')')};
+    color: #0055FB;
   }
 
   &:focus {
     outline: none;
     border-color: rgba(69, 165, 255, 0.5);
-    background-image: ${(props) => (props.fullScreen
-      ? 'url(\'/icons/full-screen-close-hover.svg\')'
-      : 'url(\'/icons/full-screen-hover.svg\');')}
+
+    color: #0055FB;
   };
 `;
 
@@ -140,6 +135,7 @@ const Header = ({ handle }) => {
         type="button"
         onClick={handleButtonClick}
       >
+        {handle.active ? <FullscreenClose /> : <FullscreenOpen />}
         <span className="visually-hidden">Развернуть на полный экран</span>
       </ButtonFullScreen>
     </Container>

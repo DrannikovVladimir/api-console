@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from './Button.jsx';
+import Format from './icons/Format.jsx'
 
 const FooterContainer = styled.div`
   display: flex;
@@ -41,6 +42,11 @@ const LinkGithub = styled.a`
   transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+&:focus {
+  outline: none;
+  color: #333333;
+}
+
 &:hover:before {
   background: #999999;
   width: 100%;
@@ -59,12 +65,11 @@ const LinkGithub = styled.a`
 `;
 
 const ButtonFormat = styled.button`
-  position: relative;
-
-  padding-top: 10px;
-  padding-left: 7px;
-  padding-bottom: 10px;
-  padding-left: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-width: 166px;
+  padding: 4px;
   border: 2px solid transparent;
   border-radius: 10px;
 
@@ -73,40 +78,17 @@ const ButtonFormat = styled.button`
 
   background-color: transparent;
 
+  color: #0D0D0D;
   cursor: pointer;
-
-  &::before {
-    content: '';
-
-    position: absolute;
-    top: 7px;
-    left: 8px;
-
-    width: 24px;
-    height: 24px;
-
-    background-image: url('/icons/format.svg');
-    background-repeat: no-repeat;
-    background-size: 24px;
-    background-position: 0 0;
-  }
 
   &:hover {
     color: #0055FB;
-
-    &::before {
-      background-image: url('/icons/format-hover.svg');
-    }
   }
 
   &:focus {
     outline: none;
     color: #0055FB;
     border-color: rgba(69, 165, 255, 0.5);
-
-    &::before {
-      background-image: url('/icons/format-hover.svg');
-    }
   }
 `;
 
@@ -115,7 +97,10 @@ const Footer = () => {
     <FooterContainer>
       <Button>Отправить</Button>
       <LinkGithub href="https://github.com/DrannikovVladimir">@link-to-my-github</LinkGithub>
-      <ButtonFormat>Форматировать</ButtonFormat>
+      <ButtonFormat>
+        <Format />
+        Форматировать
+      </ButtonFormat>
     </FooterContainer>
   )
 };
