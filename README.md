@@ -3,7 +3,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Deploy   
    
 [Sensday API-console](https://boiling-badlands-88933.herokuapp.com)   
-
+   
+## Requests   
+   
+{"action": "ping"}
 ## Authorization   
    
 Login: krowen@inbox.ru

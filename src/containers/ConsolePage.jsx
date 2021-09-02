@@ -3,8 +3,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
 import Header from '../components/Header.jsx';
 import History from '../components/History.jsx';
-import Fields from '../components/Fields.jsx';
-import Footer from '../components/Footer.jsx';
+import ConsoleForm from '../components/ConsoleForm.jsx';
 
 const ConsolePage = () => {
   const  handle = useFullScreenHandle();
@@ -13,8 +12,7 @@ const ConsolePage = () => {
     <FullScreen handle={handle}>
       <Header handle={handle} />
       <History />
-      <Fields />
-      <Footer />
+      <ConsoleForm />
     </FullScreen>
   );
 };

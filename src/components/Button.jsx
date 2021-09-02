@@ -41,7 +41,7 @@ const ButtonStyled = styled.button`
 
 const Button = ({children}) => {
   return (
-    <ButtonStyled>{children}</ButtonStyled>
+    <ButtonStyled type="submit">{children}</ButtonStyled>
   );
 };
 
