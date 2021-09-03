@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -38,7 +37,6 @@ const Title = styled.h1`
 `;
 
 function LoginPage() {
-  console.log(useSelector((state) => state.auth));
   return (
     <Wrapper>
       <LogoStyled src="/icons/logo.svg" alt="" />

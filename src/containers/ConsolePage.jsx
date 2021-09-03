@@ -6,7 +6,7 @@ import History from '../components/History.jsx';
 import ConsoleForm from '../components/ConsoleForm.jsx';
 
 const ConsolePage = () => {
-  const  handle = useFullScreenHandle();
+  const handle = useFullScreenHandle();
 
   return (
     <FullScreen handle={handle}>

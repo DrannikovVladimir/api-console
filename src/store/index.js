@@ -1,14 +1,21 @@
 import {createStore, applyMiddleware, combineReducers} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {persistStore, persistReducer} from 'redux-persist';
+import requestReducer from './slices/requestSlice';
 import storage from 'redux-persist/lib/storage';
 
 import rootReducer from 'src/store/reducers/index';
 import rootSaga from 'src/store/sagas/index';
 
 const sagaMiddleware = createSagaMiddleware();
-const persistConfig = {
-  key: 'root',
+const persistConfigAuth = {
+  key: 'auth',
+  storage,
+  blacklist: ['authError'],
+};
+
+const persistConfigRequest = {
+  key: 'request',
   storage,
 };
 
@@ -23,7 +30,8 @@ const bindMiddleware = (middleware) => {
 function configureStore(initialState = {}) {
   const store = createStore(
     combineReducers({
-      auth: persistReducer(persistConfig, rootReducer.auth),
+      auth: persistReducer(persistConfigAuth, rootReducer.auth),
+      request: persistReducer(persistConfigRequest, requestReducer),
     }),
     initialState,
     bindMiddleware([sagaMiddleware])

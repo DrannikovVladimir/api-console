@@ -51,6 +51,7 @@ export function* authenticateSaga({payload}) {
 export function* logoutSaga() {
   yield put(authenticateFailure(null));
   document.cookie = `sendsay_session=${''}`;
+  window.localStorage.removeItem('persist:root');
 }
 
 export default function* root() {

@@ -34,7 +34,6 @@ export default {
       },
       [ActionTypes.AUTHENTICATE_FAILURE]: (state, {payload}) => {
         console.log('AUTHENTICATE_FAILURE');
-        console.log(payload);
         let result = null;
         if (payload) {
           const { id, explain } = payload;

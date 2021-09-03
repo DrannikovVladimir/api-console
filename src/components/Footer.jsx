@@ -65,7 +65,9 @@ const LinkGithub = styled.a`
 }
 `;
 
-const ButtonFormat = styled.button`
+const ButtonFormat = styled.button.attrs({
+  type: 'button',
+})`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;

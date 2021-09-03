@@ -6,6 +6,7 @@ const TextArea = styled.textarea`
   border: none;
   border-radius: 5px;
   width: 100%;
+  height: 100%;
   padding: 10px;
   resize: none;
 
