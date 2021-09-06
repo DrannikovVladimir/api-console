@@ -29,12 +29,22 @@ const DropdownList = styled.ul`
 const DropdownItem = styled.li`
   margin-top: ${(props) => props.marginTop || '0'};
   margin-bottom: ${(props) => props.marginBottom || '0'};
+`;
+
+const DropdownButton = styled.button`
+  display: block;
+  width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
+  border: none;
 
   font-size: 16px;
   line-height: 20px;
+  text-align: left;
+  cursor: pointer;
+
+  background-color: transparent;
 
   &:hover {
     color: ${(props) => props.color ? '#FFFFFF' : '#0D0D0D'};
@@ -43,25 +53,27 @@ const DropdownItem = styled.li`
 `;
 
 const DropdownMenu = () => {
+  const handleRemove = (id) => {
+
+  };
+
   return (
     <DropdownList>
       <DropdownItem
         marginTop="5px"
       >
-        Выполнить
+        <DropdownButton>Выполнить</DropdownButton>
       </DropdownItem>
       <DropdownItem
-        color="#0055FB"
         marginBottom="5px"
       >
-        Скопировать
+        <DropdownButton color="#0055FB">Скопировать</DropdownButton>
       </DropdownItem>
       <DropdownItem
-        color="#CF2C00"
         marginTop="6px"
         marginBottom="5px"
       >
-        Удалить
+        <DropdownButton onClick={handleRemove} color="#CF2C00">Удалить</DropdownButton>
       </DropdownItem>
     </DropdownList>
   )

@@ -70,20 +70,35 @@ const ConsoleForm = () => {
     validate,
     onSubmit: async (values) => {
       const toJson = JSON.parse(values.json);
-      // const toObj = JSON.stringify(toJson, undefined, 2);
+      const toObj = JSON.parse(JSON.stringify(toJson, undefined, 2));
+
       try {
         const res = await api.sendsay.request(toJson);
-        const item = { id: _.uniqueId(), query: values.json, data: res};
+        const item = {
+          id: requests.length + 1,
+          name: toObj.action,
+          query: values.json,
+          data: res,
+        };
+        console.log(item);
         dispatch(addRequest({ request: item }));
       } catch (error) {
+        const itemError = {
+          id: requests.length + 1,
+          name: toObj.action,
+          query: values.json,
+          error: error.id,
+        };
+        console.log(itemError);
         console.log(error);
+        dispatch(addRequest({ request: itemError }));
       }
     },
   });
 
-  console.log(requests);
-
+  // localStorage.removeItem('persist:request');
   //  {"action": "sys.settings.get"}
+  //  {"action": "issue.send"}
   return (
     <form onSubmit={formik.handleSubmit}>
       <FieldsContainer>

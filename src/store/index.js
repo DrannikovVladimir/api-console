@@ -17,6 +17,7 @@ const persistConfigAuth = {
 const persistConfigRequest = {
   key: 'request',
   storage,
+  whitelist: ['requests']
 };
 
 const bindMiddleware = (middleware) => {

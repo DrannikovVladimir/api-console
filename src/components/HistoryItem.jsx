@@ -1,9 +1,10 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import Dropdown from './Dropdown.jsx';
 
-const Item = styled.div`
+const Item = styled.li`
   position: relative;
 
   display: flex;
@@ -32,7 +33,7 @@ const Item = styled.div`
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.2);
 
-    background-color: #30B800;
+    background-color: ${(props) => props.error ? '#CF2C00' : '#30B800'};
   }
 
   &:hover {
@@ -66,10 +67,11 @@ const ItemDropdown = styled.button`
   cursor: pointer;
 `;
 
-const HistoryItem = ({children}) => {
+const HistoryItem = ({name, id, error, dropdown}) => {
+
   return (
-    <Item>
-      <ItemName>{children}</ItemName>
+    <Item error={error} id={id}>
+      <ItemName>{name}</ItemName>
       <ItemDropdown>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>

@@ -1,18 +1,29 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import HistoryItem from './HistoryItem.jsx';
 
+const List = styled.ul`
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+`;
+
 const HistoryList = () => {
+  const { requests } = useSelector((state) => state.request);
+
+  if (requests.length === 0) {
+    return null;
+  }
   return (
-    <>
-      <HistoryItem>track.get</HistoryItem>
-      {/* <HistoryItem>issue.send</HistoryItem>
-      <HistoryItem>pong</HistoryItem>
-      <HistoryItem>track.get</HistoryItem>
-      <HistoryItem>stat.uni</HistoryItem>
-      <HistoryItem>sys.settings.get</HistoryItem> */}
-    </>
-  )
+    <List>
+      {requests.map(({ id, name, error, dropdown}) => <HistoryItem key={id} id={id} name={name} error={error} dropdown={dropdown} />)}
+    </List>
+  );
 };
 
 export default HistoryList;

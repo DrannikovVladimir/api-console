@@ -9,6 +9,7 @@ const DropdownStyled = styled.div`
   top: 30px;
   right: 0;
 
+  display: ${(props) => props.isOpened ? 'block' : 'none'};
   width: 130px;
   min-height: 140px;
   border-radius: 3px;
@@ -19,9 +20,10 @@ const DropdownStyled = styled.div`
   z-index: 20;
 `;
 
-const Dropdown = () => {
+const Dropdown = ({isOpened}) => {
+
   return (
-    <DropdownStyled>
+    <DropdownStyled isOpened={isOpened}>
       <DropdownMenu />
     </DropdownStyled>
   )
