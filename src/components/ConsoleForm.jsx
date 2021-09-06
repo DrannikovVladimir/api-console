@@ -80,7 +80,6 @@ const ConsoleForm = () => {
           query: values.json,
           data: res,
         };
-        console.log(item);
         dispatch(addRequest({ request: item }));
       } catch (error) {
         const itemError = {
@@ -89,8 +88,6 @@ const ConsoleForm = () => {
           query: values.json,
           error: error.id,
         };
-        console.log(itemError);
-        console.log(error);
         dispatch(addRequest({ request: itemError }));
       }
     },

@@ -2,6 +2,7 @@ import {createStore, applyMiddleware, combineReducers} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {persistStore, persistReducer} from 'redux-persist';
 import requestReducer from './slices/requestSlice';
+import dropdownReducer from './slices/dropdownSlice';
 import storage from 'redux-persist/lib/storage';
 
 import rootReducer from 'src/store/reducers/index';
@@ -33,6 +34,7 @@ function configureStore(initialState = {}) {
     combineReducers({
       auth: persistReducer(persistConfigAuth, rootReducer.auth),
       request: persistReducer(persistConfigRequest, requestReducer),
+      dropdown: dropdownReducer,
     }),
     initialState,
     bindMiddleware([sagaMiddleware])

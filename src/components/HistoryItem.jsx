@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import Dropdown from './Dropdown.jsx';
+import { handleDropdown } from '../store/slices/dropdownSlice.js';
 
 const Item = styled.li`
   position: relative;
@@ -67,15 +68,21 @@ const ItemDropdown = styled.button`
   cursor: pointer;
 `;
 
-const HistoryItem = ({name, id, error, dropdown}) => {
+const HistoryItem = ({name, id, error}) => {
+  const dispatch = useDispatch();
+  const { dropdown } = useSelector((state) => state.dropdown);
+  const handleDropdownClick = (id) => () => {
+    dispatch(handleDropdown({ id }));
+  };
+  console.log(dropdown);
 
   return (
     <Item error={error} id={id}>
       <ItemName>{name}</ItemName>
-      <ItemDropdown>
+      <ItemDropdown onClick={handleDropdownClick(id)}>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>
-      {/* <Dropdown /> */}
+      {dropdown.id === id ? <Dropdown /> : null}
     </Item>
   )
 };

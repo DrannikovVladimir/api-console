@@ -10,6 +10,7 @@ import ConsolePage from 'src/containers/ConsolePage.jsx';
 const {store, persistor} = createStore();
 // console.log(localStorage);
 // console.log(document.cookie);
+console.log(store.getState());
 function App() {
   return (
     <Router>

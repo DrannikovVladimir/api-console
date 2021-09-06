@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
 import DropdownMenu from './DropdownMenu.jsx';
@@ -20,10 +21,10 @@ const DropdownStyled = styled.div`
   z-index: 20;
 `;
 
-const Dropdown = ({isOpened}) => {
-
+const Dropdown = () => {
+  const {dropdown} = useSelector((state) => state.dropdown);
   return (
-    <DropdownStyled isOpened={isOpened}>
+    <DropdownStyled isOpened={dropdown.isOpened}>
       <DropdownMenu />
     </DropdownStyled>
   )
