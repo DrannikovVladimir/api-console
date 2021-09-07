@@ -19,9 +19,13 @@ const dropdownSlice = createSlice({
                 state.dropdown.id = payload.id;
             }
         },
+        closeDropdown: (state) => {
+          state.dropdown.isOpened = false;
+          state.dropdown.id = null;
+        },
     },
 });
 
-export const { handleDropdown } = dropdownSlice.actions;
+export const { handleDropdown, closeDropdown } = dropdownSlice.actions;
 
 export default dropdownSlice.reducer;

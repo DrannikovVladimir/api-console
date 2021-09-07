@@ -1,7 +1,9 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
 import HistoryList from './HistoryList.jsx';
+import { resetRequests } from '../store/slices/requestSlice.js';
 
 const Container = styled.div`
   position: relative;
@@ -31,7 +33,7 @@ const Container = styled.div`
   }
 `;
 
-const ButtonClose = styled.button`
+const ButtonReset = styled.button`
   position: absolute;
 
   top: 0;
@@ -66,10 +68,15 @@ const ButtonClose = styled.button`
 `;
 
 const History = () => {
+  const dispatch = useDispatch();
+  const handleReset = () => {
+    dispatch(resetRequests());
+  };
+
   return (
     <Container>
       <HistoryList />
-      <ButtonClose />
+      <ButtonReset onClick={handleReset} />
     </Container>
   );
 };

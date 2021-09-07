@@ -14,7 +14,6 @@ const TextArea = styled.textarea`
 `;
 
 const Request = ({ value, onChange }) => {
-
   return (
     <TextArea
       id="json"

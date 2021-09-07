@@ -15,6 +15,7 @@ const List = styled.ul`
 
 const HistoryList = () => {
   const { requests } = useSelector((state) => state.request);
+  // console.log(requests);
 
   if (requests.length === 0) {
     return null;

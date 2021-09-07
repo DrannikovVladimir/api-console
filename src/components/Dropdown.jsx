@@ -1,8 +1,9 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
 import DropdownMenu from './DropdownMenu.jsx';
+import { closeDropdown } from '../store/slices/dropdownSlice.js';
 
 const DropdownStyled = styled.div`
   position: absolute;
@@ -22,10 +23,16 @@ const DropdownStyled = styled.div`
 `;
 
 const Dropdown = () => {
+  const dispatch = useDispatch();
   const {dropdown} = useSelector((state) => state.dropdown);
+
+  const handleDropdownClose = () => {
+    dispatch(closeDropdown());
+  }
+
   return (
     <DropdownStyled isOpened={dropdown.isOpened}>
-      <DropdownMenu />
+      <DropdownMenu onHide={handleDropdownClose} />
     </DropdownStyled>
   )
 };

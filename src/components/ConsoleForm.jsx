@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import { useFormik } from 'formik';
-import _ from 'lodash';
+// import { useFormik } from 'formik';
 
-import { addRequest } from '../store/slices/requestSlice';
+import { addRequest, changeTextarea } from '../store/slices/requestSlice';
 import api from '../helpers/sendsay';
 import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
+
+const getId = (requests) => {
+  if (requests.length === 0) {
+    return 1;
+  }
+  const maxId = Math.max(...requests.map(({id}) => id));
+  return (maxId + 1);
+};
 
 const FieldsContainer = styled.div`
   display: flex;
@@ -49,10 +56,11 @@ const Label = styled.label`
   color: #999999;
 `;
 
-const validate = (values) => {
+const getValidate = (value) => {
   const errors = {};
   try {
-    JSON.parse(values.json);
+    JSON.parse(value);
+    return false;
   } catch(err) {
     // console.log(err);
     errors.json = 'Невалидный JSON';
@@ -62,53 +70,64 @@ const validate = (values) => {
 
 const ConsoleForm = () => {
   const dispatch = useDispatch();
-  const {requests} = useSelector((state) => state.request);
-  const formik = useFormik({
-    initialValues: {
-      json: '',
-    },
-    validate,
-    onSubmit: async (values) => {
-      const toJson = JSON.parse(values.json);
-      const toObj = JSON.parse(JSON.stringify(toJson, undefined, 2));
+  const {requests, value} = useSelector((state) => state.request);
+  const nextId = getId(requests);
+  const [isValid, setIsValid] = useState(false);
+  const validate = getValidate(value);
 
-      try {
-        const res = await api.sendsay.request(toJson);
-        const item = {
-          id: requests.length + 1,
-          name: toObj.action,
-          query: values.json,
-          data: res,
-        };
-        dispatch(addRequest({ request: item }));
-      } catch (error) {
-        const itemError = {
-          id: requests.length + 1,
-          name: toObj.action,
-          query: values.json,
-          error: error.id,
-        };
-        dispatch(addRequest({ request: itemError }));
-      }
-    },
-  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsValid(false);
+    if (validate) {
+      setIsValid(true);
+      return;
+    }
+
+    const toJson = JSON.parse(value);
+    const toObj = JSON.parse(JSON.stringify(toJson, undefined, 2));
+
+    try {
+      const res = await api.sendsay.request(toJson);
+      // console.log(res);
+      const item = {
+        id: nextId,
+        name: toObj.action,
+        query: value,
+        data: res,
+      };
+      dispatch(addRequest({ request: item }));
+    } catch (error) {
+      // console.log(error);
+      const itemError = {
+        id: nextId,
+        name: toObj.action,
+        query: value,
+        error: error.id,
+      };
+      dispatch(addRequest({ request: itemError }));
+    }
+  };
+
+  const handleChange = ({ target: { value } }) => {
+    dispatch(changeTextarea({ value }));
+  };
 
   // localStorage.removeItem('persist:request');
   //  {"action": "sys.settings.get"}
   //  {"action": "issue.send"}
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form id="formConsole" onSubmit={handleSubmit}>
       <FieldsContainer>
         <InnerContainer>
           <Label>Запрос:</Label>
           <RequestContainer>
-            <Request onChange={formik.handleChange} value={formik.values.json} />
+            <Request onChange={handleChange} value={value} />
           </RequestContainer>
         </InnerContainer>
         <InnerContainer>
           <Label>Ответ:</Label>
           <ResponseContainer>
-            {formik.errors.json && formik.touched.json ? <span>{formik.errors.json}</span> : null}
+            {isValid ? <span>{validate.json}</span> : null}
             <Response />
           </ResponseContainer>
         </InnerContainer>

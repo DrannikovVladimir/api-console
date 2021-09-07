@@ -74,7 +74,6 @@ const HistoryItem = ({name, id, error}) => {
   const handleDropdownClick = (id) => () => {
     dispatch(handleDropdown({ id }));
   };
-  console.log(dropdown);
 
   return (
     <Item error={error} id={id}>
