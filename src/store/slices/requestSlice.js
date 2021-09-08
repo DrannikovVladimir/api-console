@@ -49,6 +49,10 @@ export const requestSlice = createSlice({
       state.value = payload.request.query;
       state.loading = false;
     },
+    formatRequest: (state, { payload }) => {
+      const { value } = payload;
+      state.value = JSON.stringify(JSON.parse(value), undefined, 4);
+    },
     resetRequests: (state) => {
       state.loading = false;
       state.requests = [];
@@ -59,6 +63,16 @@ export const requestSlice = createSlice({
   },
 });
 
-export const { changeTextarea, loadRequest, setRequestSuccess, setRequestFailure, removeRequest, copyRequest, addCurrentRequest, resetRequests } = requestSlice.actions;
+export const {
+  changeTextarea,
+  loadRequest,
+  setRequestSuccess,
+  setRequestFailure,
+  removeRequest,
+  copyRequest,
+  addCurrentRequest,
+  formatRequest,
+  resetRequests,
+} = requestSlice.actions;
 
 export default requestSlice.reducer;

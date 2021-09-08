@@ -62,6 +62,7 @@ const DropdownMenu = ({ onHide }) => {
   const {id} = useSelector((state) => state.dropdown.dropdown);
   const {requests} = useSelector((state) => state.request);
   const currentRequest = requests.find((r) => r.id === id);
+
   const handleRemove = (id) => () => {
     dispatch(removeRequest({id}));
     onHide();

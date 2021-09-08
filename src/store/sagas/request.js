@@ -4,10 +4,8 @@ import api from 'src/helpers/sendsay';
 import {loadRequest, setRequestSuccess, setRequestFailure} from '../slices/requestSlice';
 
 export function* workerRequestSaga({payload}) {
-  console.log(payload);
   const { value } = payload;
   const obj = JSON.parse(value);
-  console.log(obj);
   try {
     const response = yield api.sendsay.request(obj);
     const request = {

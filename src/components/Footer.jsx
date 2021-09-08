@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Button from './Button.jsx';
 import Format from './icons/Format.jsx'
+import { formatRequest } from '../store/slices/requestSlice';
 
 const FooterContainer = styled.div`
   display: flex;
@@ -96,11 +98,18 @@ const ButtonFormat = styled.button.attrs({
 `;
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const {value} = useSelector((state) => state.request);
+
+  const handleFormat = () => {
+    dispatch(formatRequest({value}));
+  };
+
   return (
     <FooterContainer>
       <Button>Отправить</Button>
       <LinkGithub href="https://github.com/DrannikovVladimir">@link-to-my-github</LinkGithub>
-      <ButtonFormat>
+      <ButtonFormat onClick={handleFormat}>
         <Format />
         Форматировать
       </ButtonFormat>
