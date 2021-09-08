@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { editRequest, copyRequest, removeRequest, addCurrentRequest } from '../store/slices/requestSlice';
+import { loadRequest, copyRequest, removeRequest, addCurrentRequest } from '../store/slices/requestSlice';
 import api from '../helpers/sendsay';
 
 const DropdownList = styled.ul`
@@ -73,7 +73,10 @@ const DropdownMenu = ({ onHide }) => {
   };
 
   const handleAddCurrentRequest = () => {
+    const { id, query } = currentRequest;
     dispatch(addCurrentRequest({request: currentRequest}));
+    dispatch(loadRequest({value: query}));
+    dispatch(removeRequest({id}));
     onHide();
   };
 

@@ -34,10 +34,10 @@ export default {
       },
       [ActionTypes.AUTHENTICATE_FAILURE]: (state, {payload}) => {
         console.log('AUTHENTICATE_FAILURE');
-        let result = null;
+        let error = null;
         if (payload) {
           const { id, explain } = payload;
-          result = `{${Object.entries({id, explain})
+          error = `{${Object.entries({id, explain})
             .map(([key, value]) => `${key}: "${value}"`).join('')}}`;
         }
 
@@ -46,7 +46,7 @@ export default {
           sessionKey: null,
           login: null,
           sublogin: null,
-          authError: result,
+          authError: error,
         };
       },
       [ActionTypes.LOGOUT]: (state) => {

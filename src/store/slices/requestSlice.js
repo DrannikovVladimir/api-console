@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import getId from '../../helpers/util';
+
 const initialState = {
+  loading: false,
   requests: [],
   currentResponse: null,
   copied: false,
@@ -13,31 +16,41 @@ export const requestSlice = createSlice({
   reducers: {
     changeTextarea: (state, { payload }) => {
       state.value = payload.value;
+      state.loading = false;
     },
-    addRequest: (state, { payload }) => {
-      state.currentResponse = payload.request.data;
-      state.requests = [payload.request, ...state.requests].slice(0, 15);
+    loadRequest: (state) => {
+      state.loading = true;
+    },
+    setRequestSuccess: (state, { payload }) => {
+      const { request } = payload;
+      request.id = getId(state.requests);
+      state.requests = [request, ...state.requests];
+      state.loading = false;
+      state.copied = false;
+      state.currentRequest = null;
+    },
+    setRequestFailure: (state, { payload }) => {
+      const { requestError } = payload;
+      requestError.id = getId(state.requests);
+      state.requests = [requestError, ...state.requests];
+      state.loading = false;
       state.copied = false;
       state.currentRequest = null;
     },
     removeRequest: (state, { payload }) => {
       state.requests = state.requests.filter((r) => (r.id !== payload.id));
+      state.loading = false;
     },
     copyRequest: (state, { payload }) => {
       state.copied = true;
-    },
-    editRequest: (state, { payload }) => {
-      state.requests = state.requests.map((r) => {
-        if (r.id === payload.request.id) {
-          r = payload;
-        }
-        return r;
-      });
+      state.loading = false;
     },
     addCurrentRequest: (state, { payload }) => {
       state.value = payload.request.query;
+      state.loading = false;
     },
     resetRequests: (state) => {
+      state.loading = false;
       state.requests = [];
       state.currentResponse = null;
       state.copied = false;
@@ -46,6 +59,6 @@ export const requestSlice = createSlice({
   },
 });
 
-export const { changeTextarea, addRequest, removeRequest, copyRequest, editRequest, addCurrentRequest, resetRequests } = requestSlice.actions;
+export const { changeTextarea, loadRequest, setRequestSuccess, setRequestFailure, removeRequest, copyRequest, addCurrentRequest, resetRequests } = requestSlice.actions;
 
 export default requestSlice.reducer;

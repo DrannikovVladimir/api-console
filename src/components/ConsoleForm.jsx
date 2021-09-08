@@ -1,21 +1,11 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-// import { useFormik } from 'formik';
 
-import { addRequest, changeTextarea } from '../store/slices/requestSlice';
-import api from '../helpers/sendsay';
+import { loadRequest, changeTextarea } from '../store/slices/requestSlice';
 import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
-
-const getId = (requests) => {
-  if (requests.length === 0) {
-    return 1;
-  }
-  const maxId = Math.max(...requests.map(({id}) => id));
-  return (maxId + 1);
-};
 
 const FieldsContainer = styled.div`
   display: flex;
@@ -70,8 +60,7 @@ const getValidate = (value) => {
 
 const ConsoleForm = () => {
   const dispatch = useDispatch();
-  const {requests, value} = useSelector((state) => state.request);
-  const nextId = getId(requests);
+  const {value} = useSelector((state) => state.request);
   const [isValid, setIsValid] = useState(false);
   const validate = getValidate(value);
 
@@ -82,30 +71,7 @@ const ConsoleForm = () => {
       setIsValid(true);
       return;
     }
-
-    const toJson = JSON.parse(value);
-    const toObj = JSON.parse(JSON.stringify(toJson, undefined, 2));
-
-    try {
-      const res = await api.sendsay.request(toJson);
-      // console.log(res);
-      const item = {
-        id: nextId,
-        name: toObj.action,
-        query: value,
-        data: res,
-      };
-      dispatch(addRequest({ request: item }));
-    } catch (error) {
-      // console.log(error);
-      const itemError = {
-        id: nextId,
-        name: toObj.action,
-        query: value,
-        error: error.id,
-      };
-      dispatch(addRequest({ request: itemError }));
-    }
+    dispatch(loadRequest({value}));
   };
 
   const handleChange = ({ target: { value } }) => {
