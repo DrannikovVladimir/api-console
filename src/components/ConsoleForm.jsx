@@ -79,8 +79,7 @@ const ConsoleForm = () => {
   };
 
   // localStorage.removeItem('persist:request');
-  //  {"action": "sys.settings.get"}
-  //  {"action": "issue.send"}
+
   return (
     <form id="formConsole" onSubmit={handleSubmit}>
       <FieldsContainer>
