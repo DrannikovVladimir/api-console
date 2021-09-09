@@ -132,7 +132,7 @@ const HistoryItem = ({name, id, error}) => {
     dispatch(handleDropdown({ id }));
     dispatch(resetCopied({ id }));
   };
-  console.log(currentId, id);
+
   return (
     <Item error={error} id={id}>
       {(currentId === id) && <CopyFeedback visible={copied}>Скопировано</CopyFeedback>}

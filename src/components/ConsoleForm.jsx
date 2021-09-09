@@ -23,14 +23,18 @@ const InnerContainer = styled.div`
 
 const RequestContainer = styled.div`
   height: calc(100% - 35px);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
   border-radius: 5px;
 `;
 
 const ResponseContainer = styled.div`
   height: calc(100% - 35px);
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
   border-radius: 5px;
 
   font-size: 14px;
@@ -43,7 +47,7 @@ const Label = styled.label`
   font-weight: 400;
   font-size: 12px;
   line-height: 20px;
-  color: #999999;
+  color: ${(props) => props.isValid ? '#CF2C00' : '#999999'};
 `;
 
 const getValidate = (value) => {
@@ -61,6 +65,7 @@ const getValidate = (value) => {
 const ConsoleForm = () => {
   const dispatch = useDispatch();
   const {value} = useSelector((state) => state.request);
+  const {requestError} = useSelector((state) => state.request);
   const [isValid, setIsValid] = useState(false);
   const validate = getValidate(value);
 
@@ -84,14 +89,14 @@ const ConsoleForm = () => {
     <form id="formConsole" onSubmit={handleSubmit}>
       <FieldsContainer>
         <InnerContainer>
-          <Label>Запрос:</Label>
-          <RequestContainer>
+          <Label isValid={isValid}>Запрос:</Label>
+          <RequestContainer isValid={isValid}>
             <Request onChange={handleChange} value={value} />
           </RequestContainer>
         </InnerContainer>
         <InnerContainer>
-          <Label>Ответ:</Label>
-          <ResponseContainer>
+          <Label isValid={!!requestError}>Ответ:</Label>
+          <ResponseContainer isValid={!!requestError}>
             {isValid ? <span>{validate.json}</span> : null}
             <Response />
           </ResponseContainer>

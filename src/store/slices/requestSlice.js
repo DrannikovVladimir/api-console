@@ -9,6 +9,7 @@ const initialState = {
   copied: false,
   currentId: null,
   value: '',
+  requestError: null,
 }
 
 export const requestSlice = createSlice({
@@ -26,18 +27,20 @@ export const requestSlice = createSlice({
     setRequestSuccess: (state, { payload }) => {
       const { request } = payload;
       request.id = getId(state.requests);
-      state.requests = [request, ...state.requests];
+      state.requests = [request, ...state.requests].slice(0, 15);
       state.loading = false;
       state.copied = false;
       state.currentRequest = null;
+      state.requestError = null;
     },
     setRequestFailure: (state, { payload }) => {
       const { requestError } = payload;
       requestError.id = getId(state.requests);
-      state.requests = [requestError, ...state.requests];
+      state.requests = [requestError, ...state.requests].slice(0, 15);
       state.loading = false;
       state.copied = false;
       state.currentRequest = null;
+      state.requestError = requestError;
     },
     removeRequest: (state, { payload }) => {
       state.requests = state.requests.filter((r) => (r.id !== payload.id));

@@ -15,22 +15,6 @@ const Container = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   background-color: #f6f6f6;
-
-  &::before {
-    content: '';
-
-    position: absolute;
-    top: 5px;
-    right: 51px;
-    bottom: 5px;
-
-    width: 15px;
-    height: 40px;
-
-    background: linear-gradient(269.93deg, #F6F6F6 0.06%, rgba(246, 246, 246, 0) 99.93%);
-
-    z-index: 10;
-  }
 `;
 
 const ButtonReset = styled.button`
@@ -45,9 +29,11 @@ const ButtonReset = styled.button`
   margin-left: auto;
   border: none;
   border-left: 1px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(107, 107, 107, 0.2);
 
   background-color: #f6f6f6;
+
+  box-shadow: -12px 0 10px 0 rgba(246, 246, 246, 0.8);
 
   cursor: pointer;
 
