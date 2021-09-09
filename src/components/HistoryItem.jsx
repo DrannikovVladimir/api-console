@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 import Dropdown from './Dropdown.jsx';
 import { handleDropdown } from '../store/slices/dropdownSlice.js';
+import { resetCopied } from '../store/slices/requestSlice';
 
 const Item = styled.li`
   position: relative;
@@ -12,6 +13,7 @@ const Item = styled.li`
   align-items: center;
   justify-content: center;
   min-height: 30px;
+  min-width: 117px;
   margin-right: 10px;
   padding: 5px 25px;
   border-radius: 5px;
@@ -35,6 +37,21 @@ const Item = styled.li`
     border: 1px solid rgba(0, 0, 0, 0.2);
 
     background-color: ${(props) => props.error ? '#CF2C00' : '#30B800'};
+  }
+
+  &:after {
+    content: '';
+
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 10px;
+    background-color: #F6F6F6;
+
+    overflow: hidden;
   }
 
   &:hover {
@@ -68,15 +85,57 @@ const ItemDropdown = styled.button`
   cursor: pointer;
 `;
 
+const translate = keyframes`
+  from {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  35% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-35px);
+    opacity: 0;
+  }
+`;
+
+const CopyFeedback = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+
+  display: ${(props) => props.visible ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+  min-width: 90px;
+  width: calc(100% - 27px);
+  height: 20px;
+  border-radius: 5px;
+
+  font-size: 12px;
+  line-height: 20px;
+
+  background-color: #F6F6F6;
+
+  animation: ${translate} 2s linear;
+  animation-fill-mode: forwards;
+`;
+
 const HistoryItem = ({name, id, error}) => {
   const dispatch = useDispatch();
   const { dropdown } = useSelector((state) => state.dropdown);
+  const { copied } = useSelector((state) => state.request);
+
   const handleDropdownClick = (id) => () => {
     dispatch(handleDropdown({ id }));
+    dispatch(resetCopied());
   };
-
+  console.log(dropdown.id, id);
   return (
     <Item error={error} id={id}>
+      {dropdown.id === id ? <CopyFeedback visible={copied}>Скопировано</CopyFeedback> : null}
       <ItemName>{name}</ItemName>
       <ItemDropdown onClick={handleDropdownClick(id)}>
         <span className="visually-hidden">Открыть меню</span>

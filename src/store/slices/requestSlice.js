@@ -45,6 +45,9 @@ export const requestSlice = createSlice({
       state.copied = true;
       state.loading = false;
     },
+    resetCopied: (state) => {
+      state.copied = false;
+    },
     addCurrentRequest: (state, { payload }) => {
       state.value = payload.request.query;
       state.loading = false;
@@ -70,6 +73,7 @@ export const {
   setRequestFailure,
   removeRequest,
   copyRequest,
+  resetCopied,
   addCurrentRequest,
   formatRequest,
   resetRequests,
