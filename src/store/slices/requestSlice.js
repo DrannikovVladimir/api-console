@@ -7,6 +7,7 @@ const initialState = {
   requests: [],
   currentResponse: null,
   copied: false,
+  currentId: null,
   value: '',
 }
 
@@ -20,6 +21,7 @@ export const requestSlice = createSlice({
     },
     loadRequest: (state) => {
       state.loading = true;
+      state.currentId = null;
     },
     setRequestSuccess: (state, { payload }) => {
       const { request } = payload;
@@ -45,8 +47,9 @@ export const requestSlice = createSlice({
       state.copied = true;
       state.loading = false;
     },
-    resetCopied: (state) => {
+    resetCopied: (state, { payload }) => {
       state.copied = false;
+      state.currentId = payload.id;
     },
     addCurrentRequest: (state, { payload }) => {
       state.value = payload.request.query;

@@ -95,7 +95,7 @@ const translate = keyframes`
     opacity: 1;
   }
   to {
-    transform: translateY(-35px);
+    transform: translateY(-30px);
     opacity: 0;
   }
 `;
@@ -126,21 +126,21 @@ const CopyFeedback = styled.div`
 const HistoryItem = ({name, id, error}) => {
   const dispatch = useDispatch();
   const { dropdown } = useSelector((state) => state.dropdown);
-  const { copied } = useSelector((state) => state.request);
+  const { copied, currentId } = useSelector((state) => state.request);
 
   const handleDropdownClick = (id) => () => {
     dispatch(handleDropdown({ id }));
-    dispatch(resetCopied());
+    dispatch(resetCopied({ id }));
   };
-  console.log(dropdown.id, id);
+  console.log(currentId, id);
   return (
     <Item error={error} id={id}>
-      {dropdown.id === id ? <CopyFeedback visible={copied}>Скопировано</CopyFeedback> : null}
+      {(currentId === id) && <CopyFeedback visible={copied}>Скопировано</CopyFeedback>}
       <ItemName>{name}</ItemName>
       <ItemDropdown onClick={handleDropdownClick(id)}>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>
-      {dropdown.id === id ? <Dropdown /> : null}
+      {(dropdown.id === id) && <Dropdown />}
     </Item>
   )
 };
