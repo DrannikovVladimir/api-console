@@ -28,9 +28,9 @@ export const requestSlice = createSlice({
       const { request } = payload;
       request.id = getId(state.requests);
       state.requests = [request, ...state.requests].slice(0, 15);
+      state.currentResponse = request.data;
       state.loading = false;
       state.copied = false;
-      state.currentRequest = null;
       state.requestError = null;
     },
     setRequestFailure: (state, { payload }) => {
@@ -39,7 +39,6 @@ export const requestSlice = createSlice({
       state.requests = [requestError, ...state.requests].slice(0, 15);
       state.loading = false;
       state.copied = false;
-      state.currentRequest = null;
       state.requestError = requestError;
     },
     removeRequest: (state, { payload }) => {
@@ -67,7 +66,6 @@ export const requestSlice = createSlice({
       state.requests = [];
       state.currentResponse = null;
       state.copied = false;
-      state.currentRequest = null;
     },
   },
 });

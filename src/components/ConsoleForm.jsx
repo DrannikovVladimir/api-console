@@ -36,6 +36,7 @@ const ResponseContainer = styled.div`
   border-style: solid;
   border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
   border-radius: 5px;
+  overflow: hidden;
 
   font-size: 14px;
   line-height: 22px;

@@ -1,21 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useSelector} from 'react-redux';
+import _ from 'lodash';
+
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+
+  list-style: none;
+`;
 
 const Response = () => {
   const {currentResponse} = useSelector((state) => state.request);
-  const result = JSON.stringify(currentResponse, undefined, 2);
   if (!currentResponse) {
     return null;
   }
-  const obj = Object.entries(JSON.parse(result))
-    .map(([key, value]) => `"${key}": "${value}"`).map((item) => item.replace(/\s/g, '')).join('\n');
 
-  // console.log(result);
-  // console.log(obj);
+  console.log(currentResponse);
+  const renderResponse = () => {
+    return (
+      <List>
+        {Object.entries(currentResponse).map(([key, value]) => {
+          if (typeof value === 'object') {
+            return (
+              <ul key={_.uniqueId()}>
+                {Object.entries(value).map(([innerKey, innerValue], index) => (
+                  <li key={`000${index + 1}`}>{innerKey}: {innerValue}</li>
+                ))}
+              </ul>
+            )
+          }
+          return (
+            <li key={_.uniqueId()}>
+              <span>
+                {key}
+              </span>
+              {': '}
+              <span>
+                {value}
+              </span>
+            </li>
+          )
+        })}
+      </List>
+    )
+  };
 
   return (
-    <div>Response</div>
+    <div>{renderResponse()}</div>
   );
 };
 
