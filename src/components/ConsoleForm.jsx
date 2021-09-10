@@ -6,10 +6,12 @@ import { loadRequest, changeTextarea } from '../store/slices/requestSlice';
 import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
+import Dots from './icons/Dots.jsx';
 
 const FieldsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: calc(100vh - 166px);
   padding: 10px 15px;
 
@@ -49,6 +51,15 @@ const Label = styled.label`
   font-size: 12px;
   line-height: 20px;
   color: ${(props) => props.isValid ? '#CF2C00' : '#999999'};
+`;
+
+const ButtonDrag = styled.button`
+  width: 10px;
+  height: 40px;
+  padding: 0;
+  border: none;
+
+  background-color: transparent;
 `;
 
 const getValidate = (value) => {
@@ -107,6 +118,9 @@ const ConsoleForm = () => {
             <Request onChange={handleChange} value={value} />
           </RequestContainer>
         </InnerContainer>
+        <ButtonDrag>
+          <Dots />
+        </ButtonDrag>
         <InnerContainer>
           <Label isValid={!!requestError}>Ответ:</Label>
           <ResponseContainer ref={responseRef} isValid={!!requestError}>

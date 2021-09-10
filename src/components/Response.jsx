@@ -11,11 +11,16 @@ const List = styled.ul`
   list-style: none;
 `;
 
+const ResponseWrapper = styled.div`
+  padding-bottom: 20px;
+`;
+
 const Response = () => {
-  const {currentResponse} = useSelector((state) => state.request);
-  if (!currentResponse) {
+  const {currentResponse, requestError} = useSelector((state) => state.request);
+  if (!currentResponse || requestError) {
     return null;
   }
+
 
   const renderResponse = () => {
     return (
@@ -47,7 +52,7 @@ const Response = () => {
   };
 
   return (
-    <div>{renderResponse()}</div>
+    <ResponseWrapper>{renderResponse()}</ResponseWrapper>
   );
 };
 
