@@ -3,8 +3,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { loadRequest, copyRequest, removeRequest, addCurrentRequest } from '../store/slices/requestSlice';
-import api from '../helpers/sendsay';
+import {
+  loadRequest,
+  copyRequest,
+  removeRequest,
+  addCurrentRequest
+} from '../store/slices/requestSlice';
 
 const DropdownList = styled.ul`
   position: relative;
@@ -88,7 +92,7 @@ const DropdownMenu = ({ onHide }) => {
       >
         <DropdownButton onClick={handleAddCurrentRequest}>Выполнить</DropdownButton>
       </DropdownItem>
-      <CopyToClipboard text={currentRequest.query} onCopy={handleCopy(id)}>
+      <CopyToClipboard text={currentRequest?.query} onCopy={handleCopy(id)}>
         <DropdownItem
           marginBottom="5px"
         >

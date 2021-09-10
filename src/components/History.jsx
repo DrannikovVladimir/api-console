@@ -1,16 +1,14 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
+import Dropdown from './Dropdown.jsx';
 import HistoryList from './HistoryList.jsx';
 import { resetRequests } from '../store/slices/requestSlice.js';
 
 const Container = styled.div`
   position: relative;
 
-  display: flex;
-  align-items: center;
-  min-height: 50px;
   padding-left: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
@@ -53,16 +51,42 @@ const ButtonReset = styled.button`
   }
 `;
 
+const HistoryWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding-right: 50px;
+  overflow-x: hidden;
+`;
+
 const History = () => {
   const dispatch = useDispatch();
+  const historyWrapperRef = useRef();
+  const {coords} = useSelector((state) => state.dropdown);
   const handleReset = () => {
     dispatch(resetRequests());
   };
 
+  useEffect(() => {
+    const el = historyWrapperRef.current;
+    const handleWheel = (evt) => {
+      evt.preventDefault();
+      el.scrollLeft += evt.deltaY;
+    };
+    el.addEventListener('wheel', handleWheel);
+
+    return (() => el.removeEventListener('wheel', handleWheel));
+  }, []);
+
   return (
     <Container>
-      <HistoryList />
+      <HistoryWrapper ref={historyWrapperRef}>
+        <HistoryList />
+      </HistoryWrapper>
       <ButtonReset onClick={handleReset} />
+      <Dropdown left={coords?.left} top={coords?.top} width={coords?.width} height={coords?.height} />
     </Container>
   );
 };

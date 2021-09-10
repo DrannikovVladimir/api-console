@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, {keyframes} from 'styled-components';
 
@@ -125,22 +125,22 @@ const CopyFeedback = styled.div`
 
 const HistoryItem = ({name, id, error}) => {
   const dispatch = useDispatch();
-  const { dropdown } = useSelector((state) => state.dropdown);
+  const itemRef = useRef();
   const { copied, currentId } = useSelector((state) => state.request);
 
-  const handleDropdownClick = (id) => () => {
-    dispatch(handleDropdown({ id }));
+  const handleDropdownClick = (id) => (evt) => {
+    const coords = itemRef.current.getBoundingClientRect();
+    dispatch(handleDropdown({ id, coords }));
     dispatch(resetCopied({ id }));
   };
 
   return (
-    <Item error={error} id={id}>
+    <Item error={error} id={id} ref={itemRef}>
       {(currentId === id) && <CopyFeedback visible={copied}>Скопировано</CopyFeedback>}
       <ItemName>{name}</ItemName>
       <ItemDropdown onClick={handleDropdownClick(id)}>
         <span className="visually-hidden">Открыть меню</span>
       </ItemDropdown>
-      {(dropdown.id === id) && <Dropdown />}
     </Item>
   )
 };

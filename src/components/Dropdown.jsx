@@ -8,8 +8,10 @@ import { closeDropdown } from '../store/slices/dropdownSlice.js';
 const DropdownStyled = styled.div`
   position: absolute;
 
-  top: 30px;
-  right: 0;
+  top: ${(props) => `${props.top - 21}px` || '0px'};
+  left: ${(props) => (props.left - 130 + props.width) < 10
+    ? '10px'
+    : `${props.left - 130 + props.width}px` || '0px'};
 
   display: ${(props) => props.isOpened ? 'block' : 'none'};
   width: 130px;
@@ -22,7 +24,7 @@ const DropdownStyled = styled.div`
   z-index: 20;
 `;
 
-const Dropdown = () => {
+const Dropdown = (props) => {
   const dispatch = useDispatch();
   const {dropdown} = useSelector((state) => state.dropdown);
 
@@ -31,7 +33,7 @@ const Dropdown = () => {
   }
 
   return (
-    <DropdownStyled isOpened={dropdown.isOpened}>
+    <DropdownStyled isOpened={dropdown.isOpened} {...props}>
       <DropdownMenu onHide={handleDropdownClose} />
     </DropdownStyled>
   )
