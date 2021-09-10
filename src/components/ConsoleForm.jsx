@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
@@ -36,7 +36,7 @@ const ResponseContainer = styled.div`
   border-style: solid;
   border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: hidden;
 
   font-size: 14px;
   line-height: 22px;
@@ -65,6 +65,7 @@ const getValidate = (value) => {
 
 const ConsoleForm = () => {
   const dispatch = useDispatch();
+  const responseRef = useRef();
   const {value} = useSelector((state) => state.request);
   const {requestError} = useSelector((state) => state.request);
   const [isValid, setIsValid] = useState(false);
@@ -84,6 +85,17 @@ const ConsoleForm = () => {
     dispatch(changeTextarea({ value }));
   };
 
+  useEffect(() => {
+    const response = responseRef.current;
+    const handleWheel = (evt) => {
+      evt.preventDefault();
+      response.scrollTop += evt.deltaY;
+    };
+    response.addEventListener('wheel', handleWheel);
+
+    return (() => response.removeEventListener('wheel', handleWheel));
+  }, []);
+
   // localStorage.removeItem('persist:request');
 
   return (
@@ -97,7 +109,7 @@ const ConsoleForm = () => {
         </InnerContainer>
         <InnerContainer>
           <Label isValid={!!requestError}>Ответ:</Label>
-          <ResponseContainer isValid={!!requestError}>
+          <ResponseContainer ref={responseRef} isValid={!!requestError}>
             {isValid ? <span>{validate.json}</span> : null}
             <Response />
           </ResponseContainer>

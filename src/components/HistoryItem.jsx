@@ -2,7 +2,6 @@ import React, {useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, {keyframes} from 'styled-components';
 
-import Dropdown from './Dropdown.jsx';
 import { handleDropdown } from '../store/slices/dropdownSlice.js';
 import { resetCopied } from '../store/slices/requestSlice';
 

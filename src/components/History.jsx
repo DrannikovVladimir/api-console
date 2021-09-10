@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Dropdown from './Dropdown.jsx';
 import HistoryList from './HistoryList.jsx';
 import { resetRequests } from '../store/slices/requestSlice.js';
+import { closeDropdown } from '../store/slices/dropdownSlice.js';
 
 const Container = styled.div`
   position: relative;
@@ -74,6 +75,7 @@ const History = () => {
     const handleWheel = (evt) => {
       evt.preventDefault();
       el.scrollLeft += evt.deltaY;
+      dispatch(closeDropdown());
     };
     el.addEventListener('wheel', handleWheel);
 

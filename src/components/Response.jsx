@@ -17,7 +17,6 @@ const Response = () => {
     return null;
   }
 
-  console.log(currentResponse);
   const renderResponse = () => {
     return (
       <List>
