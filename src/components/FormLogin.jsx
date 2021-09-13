@@ -109,9 +109,15 @@ const LoginForm = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      login: Yup.string().required(),
+      login: Yup
+        .string()
+        .required()
+        .matches(/^[a-z0-9@._-]+$/i),
       sublogin: Yup.string(),
-      password: Yup.string().required(),
+      password: Yup
+        .string()
+        .matches(/^[^а-яА-Я]+$/)
+        .required(),
     }),
     onSubmit: (values) => {
       dispatch(
