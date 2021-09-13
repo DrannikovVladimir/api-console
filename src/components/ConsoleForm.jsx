@@ -125,8 +125,6 @@ const ConsoleForm = () => {
       evtDown.stopPropagation();
       evtDown.preventDefault();
 
-      console.log(document.documentElement.clientWidth);
-
       let startCoord = {
         x: evtDown.clientX,
       };

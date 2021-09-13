@@ -80,7 +80,7 @@ const History = () => {
     el.addEventListener('wheel', handleWheel);
 
     return (() => el.removeEventListener('wheel', handleWheel));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
