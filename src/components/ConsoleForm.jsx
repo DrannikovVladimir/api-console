@@ -21,12 +21,14 @@ const FieldsContainer = styled.div`
 
 const InnerRequestContainer = styled.div`
   height: 100%;
-  width: ${(props) => props.x ? `${props.x - 20}px` : 'calc(50% - 5px)'};
+  width: calc(50% - 5px);
+  /* width: ${(props) => props.x ? `${props.x - 20}px` : 'calc(50% - 5px)'}; */
 `;
 
 const InnerResponseContainer = styled.div`
   height: 100%;
-  width: ${(props) => props.x ? `${props.width - props.x - 20}px` : 'calc(50% - 5px)'};
+  width: calc(50% - 5px);
+  /* width: ${(props) => props.x ? `${props.width - props.x - 20}px` : 'calc(50% - 5px)'}; */
 `;
 
 const RequestContainer = styled.div`
@@ -62,7 +64,7 @@ const Label = styled.label`
 const ButtonDrag = styled.button`
   position: absolute;
   top: 50%;
-  left: ${(props) => props.x ? `${props.x}px` : '50%'};
+  left: 50%;
 
   transform: translate(-50%, -50%);
   width: 20px;
@@ -165,20 +167,23 @@ const ConsoleForm = () => {
   }, [dispatch]);
 
   // localStorage.removeItem('persist:request');
+  const requestWidth = resizeCoord ? `${resizeCoord.x - 20}px` : 'calc(50% - 5px)';
+  const buttonPositionLeft = resizeCoord ? `${resizeCoord.x}px` : '50%';
+  const responseWidth = resizeCoord ? `${resizeCoord.width - resizeCoord.x - 20}px` : 'calc(50% - 5px)';
 
   return (
     <>
       <FieldsContainer>
-        <InnerRequestContainer {...resizeCoord}>
+        <InnerRequestContainer style={{width: requestWidth}}>
           <Label isValid={isValid}>Запрос:</Label>
           <RequestContainer isValid={isValid}>
             <Request onChange={handleChange} value={value} onSubmit={handleSubmit}/>
           </RequestContainer>
         </InnerRequestContainer>
-        <ButtonDrag ref={buttonRef} {...resizeCoord}>
+        <ButtonDrag style={{left: buttonPositionLeft}} ref={buttonRef}>
           <Dots />
         </ButtonDrag>
-        <InnerResponseContainer {...resizeCoord}>
+        <InnerResponseContainer style={{width: responseWidth}}>
           <Label isValid={!!requestError}>Ответ:</Label>
           <ResponseContainer ref={responseRef} isValid={!!requestError}>
             {isValid ? <span>{validate.json}</span> : null}
