@@ -15,7 +15,7 @@ const TextArea = styled.textarea`
 
 const Request = ({ value, onChange, onSubmit }) => {
   return (
-    <form id="formConsole" onSubmit={onSubmit}>
+    <form id="formConsole" style={{ height: '100%' }} onSubmit={onSubmit}>
       <TextArea
         id="json"
         name="json"

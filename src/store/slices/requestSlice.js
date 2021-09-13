@@ -27,8 +27,9 @@ export const requestSlice = createSlice({
     },
     setRequestSuccess: (state, { payload }) => {
       const { request } = payload;
+      const filteredRequests = state.requests.filter((r) => r.name !== payload.request.name);
       request.id = getId(state.requests);
-      state.requests = [request, ...state.requests].slice(0, 15);
+      state.requests = [request, ...filteredRequests].slice(0, 15);
       state.currentResponse = request.data;
       state.loading = false;
       state.copied = false;
@@ -36,8 +37,9 @@ export const requestSlice = createSlice({
     },
     setRequestFailure: (state, { payload }) => {
       const { requestError } = payload;
+      const filteredRequests = state.requests.filter((r) => r.name !== payload.requestError.name);
       requestError.id = getId(state.requests);
-      state.requests = [requestError, ...state.requests].slice(0, 15);
+      state.requests = [requestError, ...filteredRequests].slice(0, 15);
       state.loading = false;
       state.copied = false;
       state.requestError = requestError;
