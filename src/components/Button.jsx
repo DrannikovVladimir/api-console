@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ButtonStyled = styled.button`
+const ButtonStyled = styled.button.attrs({
+  type: "submit",
+})`
   min-width: 110px;
   min-height: 40px;
   border: none;
@@ -39,9 +41,9 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const Button = ({children}) => {
+const Button = ({children, formName}) => {
   return (
-    <ButtonStyled type="submit">{children}</ButtonStyled>
+    <ButtonStyled form={formName}>{children}</ButtonStyled>
   );
 };
 

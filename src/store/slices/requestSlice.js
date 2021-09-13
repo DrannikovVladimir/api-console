@@ -9,6 +9,7 @@ const initialState = {
   copied: false,
   currentId: null,
   value: '',
+  resizeCoord: null,
   requestError: null,
 }
 
@@ -61,6 +62,10 @@ export const requestSlice = createSlice({
       const { value } = payload;
       state.value = JSON.stringify(JSON.parse(value), undefined, 4);
     },
+    setNewSize: (state, { payload }) => {
+      const { coord } = payload;
+      state.resizeCoord = coord;
+    },
     resetRequests: (state) => {
       state.loading = false;
       state.requests = [];
@@ -80,6 +85,7 @@ export const {
   resetCopied,
   addCurrentRequest,
   formatRequest,
+  setNewSize,
   resetRequests,
 } = requestSlice.actions;
 

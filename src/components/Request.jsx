@@ -13,14 +13,16 @@ const TextArea = styled.textarea`
   outline: none;
 `;
 
-const Request = ({ value, onChange }) => {
+const Request = ({ value, onChange, onSubmit }) => {
   return (
-    <TextArea
-      id="json"
-      name="json"
-      value={value}
-      onChange={onChange}
-    />
+    <form id="formConsole" onSubmit={onSubmit}>
+      <TextArea
+        id="json"
+        name="json"
+        value={value}
+        onChange={onChange}
+      />
+    </form>
   )
 };
 

@@ -97,6 +97,11 @@ const ButtonFormat = styled.button.attrs({
   }
 `;
 
+const ButtonSubmit = styled(Button).attrs(props => ({
+  form: "formConsole",
+}))
+``;
+
 const Footer = () => {
   const dispatch = useDispatch();
   const {value} = useSelector((state) => state.request);
@@ -107,7 +112,7 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-      <Button>Отправить</Button>
+      <ButtonSubmit formName="formConsole">Отправить</ButtonSubmit>
       <LinkGithub href="https://github.com/DrannikovVladimir">@link-to-my-github</LinkGithub>
       <ButtonFormat onClick={handleFormat}>
         <Format />

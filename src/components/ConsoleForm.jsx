@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import { loadRequest, changeTextarea } from '../store/slices/requestSlice';
+import { loadRequest, changeTextarea, setNewSize } from '../store/slices/requestSlice';
 import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
 import Dots from './icons/Dots.jsx';
 
 const FieldsContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,9 +19,14 @@ const FieldsContainer = styled.div`
   background-color: #FFFFFF;
 `;
 
-const InnerContainer = styled.div`
+const InnerRequestContainer = styled.div`
   height: 100%;
-  width: calc(50% - 5px);
+  width: ${(props) => props.x ? `${props.x - 20}px` : 'calc(50% - 5px)'};
+`;
+
+const InnerResponseContainer = styled.div`
+  height: 100%;
+  width: ${(props) => props.x ? `${props.width - props.x - 20}px` : 'calc(50% - 5px)'};
 `;
 
 const RequestContainer = styled.div`
@@ -54,12 +60,18 @@ const Label = styled.label`
 `;
 
 const ButtonDrag = styled.button`
-  width: 10px;
+  position: absolute;
+  top: 50%;
+  left: ${(props) => props.x ? `${props.x}px` : '50%'};
+
+  transform: translate(-50%, -50%);
+  width: 20px;
   height: 40px;
   padding: 0;
   border: none;
 
   background-color: transparent;
+  cursor: url('/icons/col-resize.svg'), auto;
 `;
 
 const getValidate = (value) => {
@@ -77,8 +89,8 @@ const getValidate = (value) => {
 const ConsoleForm = () => {
   const dispatch = useDispatch();
   const responseRef = useRef();
-  const {value} = useSelector((state) => state.request);
-  const {requestError} = useSelector((state) => state.request);
+  const buttonRef = useRef();
+  const {value, requestError, resizeCoord} = useSelector((state) => state.request);
   const [isValid, setIsValid] = useState(false);
   const validate = getValidate(value);
 
@@ -92,8 +104,8 @@ const ConsoleForm = () => {
     dispatch(loadRequest({value}));
   };
 
-  const handleChange = ({ target: { value } }) => {
-    dispatch(changeTextarea({ value }));
+  const handleChange = (e) => {
+    dispatch(changeTextarea({ value: e.target.value }));
   };
 
   useEffect(() => {
@@ -107,30 +119,77 @@ const ConsoleForm = () => {
     return (() => response.removeEventListener('wheel', handleWheel));
   }, []);
 
+  useEffect(() => {
+    const buttonDrag = buttonRef.current;
+    const handleDown = (evtDown) => {
+      evtDown.stopPropagation();
+      evtDown.preventDefault();
+
+      console.log(document.documentElement.clientWidth);
+
+      let startCoord = {
+        x: evtDown.clientX,
+      };
+
+      const handleMove = (evtMove) => {
+        evtMove.preventDefault();
+        evtMove.stopPropagation();
+
+        startCoord = {
+          x: evtMove.clientX,
+        };
+
+        if (startCoord.x <= 200) {
+          startCoord.x = 200;
+        }
+        if (document.documentElement.clientWidth - startCoord.x <= 200) {
+          startCoord.x = document.documentElement.clientWidth - 200;
+        }
+
+        dispatch(setNewSize({ coord: { ...startCoord, width: document.documentElement.clientWidth } }));
+      };
+
+      const handleUp = (evtUp) => {
+        evtUp.preventDefault();
+        evtUp.stopPropagation();
+
+        document.removeEventListener('mousemove', handleMove);
+        document.removeEventListener('mouseup', handleUp);
+      }
+
+      document.addEventListener('mousemove', handleMove);
+      document.addEventListener('mouseup', handleUp);
+    }
+
+    buttonDrag.addEventListener('mousedown', handleDown);
+
+    return (() => buttonDrag.removeEventListener('mousedown', handleDown));
+  }, [dispatch]);
+
   // localStorage.removeItem('persist:request');
 
   return (
-    <form id="formConsole" onSubmit={handleSubmit}>
+    <>
       <FieldsContainer>
-        <InnerContainer>
+        <InnerRequestContainer {...resizeCoord}>
           <Label isValid={isValid}>Запрос:</Label>
           <RequestContainer isValid={isValid}>
-            <Request onChange={handleChange} value={value} />
+            <Request onChange={handleChange} value={value} onSubmit={handleSubmit}/>
           </RequestContainer>
-        </InnerContainer>
-        <ButtonDrag>
+        </InnerRequestContainer>
+        <ButtonDrag ref={buttonRef} {...resizeCoord}>
           <Dots />
         </ButtonDrag>
-        <InnerContainer>
+        <InnerResponseContainer {...resizeCoord}>
           <Label isValid={!!requestError}>Ответ:</Label>
           <ResponseContainer ref={responseRef} isValid={!!requestError}>
             {isValid ? <span>{validate.json}</span> : null}
             <Response />
           </ResponseContainer>
-        </InnerContainer>
+        </InnerResponseContainer>
       </FieldsContainer>
       <Footer />
-    </form>
+    </>
   )
 };
 
