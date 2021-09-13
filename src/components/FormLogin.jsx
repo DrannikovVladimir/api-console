@@ -7,8 +7,11 @@ import styled from 'styled-components';
 
 import {authenticate} from '../store/actions/auth';
 import Button from '../components/Button.jsx';
+import Loader from './icons/Loader.jsx';
 
 const FormGroup = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
@@ -40,6 +43,16 @@ const Input = styled.input`
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
   }
+`;
+
+const SubloginLabel = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 12px;
+  line-height: 20px;
+  color: #999999;
 `;
 
 const FeedbackError = styled.div`
@@ -144,6 +157,7 @@ const LoginForm = () => {
         />
       </FormGroup>
       <FormGroup className="login-form__group">
+        <SubloginLabel>Опционально</SubloginLabel>
         <Label htmlFor="sublogin" className="login-form__label">Сублогин</Label>
         <Input
           className="sublogin-form__input"
@@ -174,7 +188,7 @@ const LoginForm = () => {
       </FormGroup>
       <Button type="submit" disabled={(formik.errors.login && formik.touched.login)
         || (formik.errors.password && formik.touched.password)}>
-        {formik.isSubmitting && formik.isValid && !error ? 'Отправка' : 'Войти'}
+        {formik.isSubmitting && formik.isValid && !error ? <Loader /> : 'Войти'}
       </Button>
     </form>
   );

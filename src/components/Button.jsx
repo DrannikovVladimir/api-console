@@ -4,6 +4,9 @@ import styled from 'styled-components';
 const ButtonStyled = styled.button.attrs({
   type: "submit",
 })`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 110px;
   min-height: 40px;
   border: none;
