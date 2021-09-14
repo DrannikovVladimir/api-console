@@ -9,6 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 {"action": "ping"}   
 {"action": "sys.settings.get"}   
 {"action": "issue.send"}
+{"action": "stat.uni"}
 ## Authorization   
    
 Login: krowen@inbox.ru   
