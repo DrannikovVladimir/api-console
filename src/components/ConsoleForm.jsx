@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
@@ -9,26 +9,29 @@ import Footer from './Footer.jsx';
 import Dots from './icons/Dots.jsx';
 
 const FieldsContainer = styled.div`
+  padding: 10px 15px;
+  height: calc(100vh - 166px);
+
+  background-color: #FFFFFF;
+`;
+
+const FieldsContainerWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: calc(100vh - 166px);
-  padding: 10px 15px;
-
-  background-color: #FFFFFF;
+  height: 100%;
 `;
 
 const InnerRequestContainer = styled.div`
   height: 100%;
   width: calc(50% - 5px);
-  /* width: ${(props) => props.x ? `${props.x - 20}px` : 'calc(50% - 5px)'}; */
+  margin-right: 10px;
 `;
 
 const InnerResponseContainer = styled.div`
   height: 100%;
   width: calc(50% - 5px);
-  /* width: ${(props) => props.x ? `${props.width - props.x - 20}px` : 'calc(50% - 5px)'}; */
 `;
 
 const RequestContainer = styled.div`
@@ -64,9 +67,9 @@ const Label = styled.label`
 const ButtonDrag = styled.button`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: calc(50% - 10px);
 
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   width: 20px;
   height: 40px;
   padding: 0;
@@ -139,14 +142,16 @@ const ConsoleForm = () => {
           x: evtMove.clientX,
         };
 
-        if (startCoord.x <= 200) {
-          startCoord.x = 200;
+        const documentWidth = document.documentElement.clientWidth;
+
+        if (startCoord.x <= 250) {
+          startCoord.x = 250;
         }
-        if (document.documentElement.clientWidth - startCoord.x <= 200) {
-          startCoord.x = document.documentElement.clientWidth - 200;
+        if (documentWidth - startCoord.x <= 250) {
+          startCoord.x = documentWidth - 250;
         }
 
-        dispatch(setNewSize({ coord: { ...startCoord, width: document.documentElement.clientWidth } }));
+        dispatch(setNewSize({ coord: { ...startCoord, width: documentWidth } }));
       };
 
       const handleUp = (evtUp) => {
@@ -166,30 +171,32 @@ const ConsoleForm = () => {
     return (() => buttonDrag.removeEventListener('mousedown', handleDown));
   }, [dispatch]);
 
-  // localStorage.removeItem('persist:request');
-  const requestWidth = resizeCoord ? `${resizeCoord.x - 20}px` : 'calc(50% - 5px)';
-  const buttonPositionLeft = resizeCoord ? `${resizeCoord.x}px` : '50%';
-  const responseWidth = resizeCoord ? `${resizeCoord.width - resizeCoord.x - 20}px` : 'calc(50% - 5px)';
+  const requestWidth = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
+  const buttonPositionLeft = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 10px)` : 'calc(50% - 10px)';
+  const responseWidth = resizeCoord ? `calc(${(resizeCoord.width - resizeCoord.x) * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
+  console.log(requestWidth, responseWidth, buttonPositionLeft);
 
   return (
     <>
       <FieldsContainer>
-        <InnerRequestContainer style={{width: requestWidth}}>
-          <Label isValid={isValid}>Запрос:</Label>
-          <RequestContainer isValid={isValid}>
-            <Request onChange={handleChange} value={value} onSubmit={handleSubmit}/>
-          </RequestContainer>
-        </InnerRequestContainer>
-        <ButtonDrag style={{left: buttonPositionLeft}} ref={buttonRef}>
-          <Dots />
-        </ButtonDrag>
-        <InnerResponseContainer style={{width: responseWidth}}>
-          <Label isValid={!!requestError}>Ответ:</Label>
-          <ResponseContainer ref={responseRef} isValid={!!requestError}>
-            {isValid ? <span>{validate.json}</span> : null}
-            <Response />
-          </ResponseContainer>
-        </InnerResponseContainer>
+        <FieldsContainerWrapper>
+          <InnerRequestContainer style={{width: requestWidth}}>
+            <Label isValid={isValid}>Запрос:</Label>
+            <RequestContainer isValid={isValid}>
+              <Request onChange={handleChange} value={value} onSubmit={handleSubmit}/>
+            </RequestContainer>
+          </InnerRequestContainer>
+          <ButtonDrag style={{left: buttonPositionLeft}} ref={buttonRef}>
+            <Dots />
+          </ButtonDrag>
+          <InnerResponseContainer style={{width: responseWidth}}>
+            <Label isValid={!!requestError}>Ответ:</Label>
+            <ResponseContainer ref={responseRef} isValid={!!requestError}>
+              {isValid ? <span>{validate.json}</span> : null}
+              <Response />
+            </ResponseContainer>
+          </InnerResponseContainer>
+        </FieldsContainerWrapper>
       </FieldsContainer>
       <Footer />
     </>
