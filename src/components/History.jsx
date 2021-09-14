@@ -6,6 +6,7 @@ import Dropdown from './Dropdown.jsx';
 import HistoryList from './HistoryList.jsx';
 import { resetRequests } from '../store/slices/requestSlice.js';
 import { closeDropdown } from '../store/slices/dropdownSlice.js';
+import { dropdownSelector } from '../store/slices/selectors.js';
 
 const Container = styled.div`
   position: relative;
@@ -65,7 +66,7 @@ const HistoryWrapper = styled.div`
 const History = () => {
   const dispatch = useDispatch();
   const historyWrapperRef = useRef();
-  const {coords} = useSelector((state) => state.dropdown);
+  const {coords} = useSelector(dropdownSelector);
   const handleReset = () => {
     dispatch(resetRequests());
   };

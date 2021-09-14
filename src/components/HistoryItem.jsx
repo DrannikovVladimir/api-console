@@ -2,8 +2,9 @@ import React, {useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, {keyframes} from 'styled-components';
 
-import { handleDropdown } from '../store/slices/dropdownSlice.js';
-import { resetCopied } from '../store/slices/requestSlice';
+import { closeDropdown, handleDropdown } from '../store/slices/dropdownSlice.js';
+import { resetCopied, formatRequest } from '../store/slices/requestSlice';
+import { requestsSelector, currentIdSelector, copiedSelector } from 'src/store/slices/selectors.js';
 
 const Item = styled.li`
   position: relative;
@@ -125,16 +126,25 @@ const CopyFeedback = styled.div`
 const HistoryItem = ({name, id, error}) => {
   const dispatch = useDispatch();
   const itemRef = useRef();
-  const { copied, currentId } = useSelector((state) => state.request);
+  const requests = useSelector(requestsSelector);
+  const copied = useSelector(copiedSelector);
+  const currentId = useSelector(currentIdSelector);
 
   const handleDropdownClick = (id) => (evt) => {
+    evt.stopPropagation();
     const coords = itemRef.current.getBoundingClientRect();
     dispatch(handleDropdown({ id, coords }));
     dispatch(resetCopied({ id }));
   };
 
+  const handleClickItem = (e) => {
+    const currentRequest = requests.find((r) => r.id === id);
+    dispatch(formatRequest({ value: currentRequest.query }));
+    dispatch(closeDropdown());
+  }
+
   return (
-    <Item error={error} id={id} ref={itemRef}>
+    <Item onClick={handleClickItem} error={error} id={id} ref={itemRef}>
       {(currentId === id) && <CopyFeedback visible={copied}>Скопировано</CopyFeedback>}
       <ItemName>{name}</ItemName>
       <ItemDropdown onClick={handleDropdownClick(id)}>

@@ -9,7 +9,7 @@ const initialState = {
   copied: false,
   currentId: null,
   value: '',
-  resizeCoord: { coord: { x: `calc(50% - 5px)`}},
+  resizeCoord: null,
   requestError: null,
 }
 

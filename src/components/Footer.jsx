@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Button from './Button.jsx';
 import Format from './icons/Format.jsx'
 import { formatRequest } from '../store/slices/requestSlice';
+import { valueSelector } from '../store/slices/selectors.js';
 
 const FooterContainer = styled.div`
   display: flex;
@@ -104,7 +105,7 @@ const ButtonSubmit = styled(Button).attrs(props => ({
 
 const Footer = () => {
   const dispatch = useDispatch();
-  const {value} = useSelector((state) => state.request);
+  const value = useSelector(valueSelector);
 
   const handleFormat = () => {
     dispatch(formatRequest({value}));
@@ -113,7 +114,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <ButtonSubmit formName="formConsole">Отправить</ButtonSubmit>
-      <LinkGithub href="https://github.com/DrannikovVladimir">@link-to-my-github</LinkGithub>
+      <LinkGithub href="https://github.com/DrannikovVladimir" target="_blank">@link-to-my-github</LinkGithub>
       <ButtonFormat onClick={handleFormat}>
         <Format />
         Форматировать

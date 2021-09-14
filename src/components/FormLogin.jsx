@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import {authenticate} from '../store/actions/auth';
 import Button from '../components/Button.jsx';
 import Loader from './icons/Loader.jsx';
+import { isLoggedInSelector, authErrorSelector } from '../store/slices/selectors.js';
 
 const FormGroup = styled.div`
   position: relative;
@@ -100,8 +101,8 @@ const FeedbackTitle = styled.h2`
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isLoggedIn = useSelector((state) => !!state.auth?.sessionKey);
-  const error = useSelector((state) => state.auth.authError);
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const error = useSelector(authErrorSelector);
   const formik = useFormik({
     initialValues: {
       login: '',
@@ -131,7 +132,7 @@ const LoginForm = () => {
   });
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (!!isLoggedIn) {
       history.push('/console');
     }
   }, [isLoggedIn, history]);

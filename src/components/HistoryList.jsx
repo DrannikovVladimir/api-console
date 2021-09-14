@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import HistoryItem from './HistoryItem.jsx';
+import { requestsSelector } from '../store/slices/selectors.js';
 
 const List = styled.ul`
   display: flex;
@@ -13,13 +14,23 @@ const List = styled.ul`
   list-style: none;
 `;
 
+const HistoryFeedback = styled.p`
+  margin: 0;
+  margin-left: 5px;
+  padding: 0;
+
+  font-size: 18px;
+  line-height: 24px;
+  color: #c0c0c0;
+`;
+
 const HistoryList = () => {
-  const { requests } = useSelector((state) => state.request);
-  // console.log(requests);
+  const requests = useSelector(requestsSelector);
 
   if (requests.length === 0) {
-    return null;
+    return <HistoryFeedback>Список запросов пуст</HistoryFeedback>;
   }
+
   return (
     <List>
       {requests.map(({ id, name, error, dropdown}) => <HistoryItem key={id} id={id} name={name} error={error} dropdown={dropdown} />)}

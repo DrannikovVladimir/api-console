@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import DropdownMenu from './DropdownMenu.jsx';
 import { closeDropdown } from '../store/slices/dropdownSlice.js';
+import { dropdownSelector } from '../store/slices/selectors.js';
 
 const DropdownStyled = styled.div`
   position: absolute;
@@ -26,7 +27,7 @@ const DropdownStyled = styled.div`
 
 const Dropdown = (props) => {
   const dispatch = useDispatch();
-  const {dropdown} = useSelector((state) => state.dropdown);
+  const dropdown = useSelector(dropdownSelector);
 
   const handleDropdownClose = () => {
     dispatch(closeDropdown());

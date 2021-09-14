@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
 import { loadRequest, changeTextarea, setNewSize } from '../store/slices/requestSlice';
+import { valueSelector, requestErrorSelector, resizeCoordSelector } from 'src/store/slices/selectors';
 import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
@@ -95,7 +96,9 @@ const ConsoleForm = () => {
   const dispatch = useDispatch();
   const responseRef = useRef();
   const buttonRef = useRef();
-  const {value, requestError, resizeCoord} = useSelector((state) => state.request);
+  const value = useSelector(valueSelector);
+  const requestError = useSelector(requestErrorSelector);
+  const resizeCoord = useSelector(resizeCoordSelector);
   const [isValid, setIsValid] = useState(false);
   const validate = getValidate(value);
 
@@ -174,7 +177,6 @@ const ConsoleForm = () => {
   const requestWidth = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
   const buttonPositionLeft = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 10px)` : 'calc(50% - 10px)';
   const responseWidth = resizeCoord ? `calc(${(resizeCoord.width - resizeCoord.x) * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
-  console.log(requestWidth, responseWidth, buttonPositionLeft);
 
   return (
     <>

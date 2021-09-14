@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {useSelector} from 'react-redux';
 import _ from 'lodash';
 
+import { currentResponseSelector, requestErrorSelector } from '../store/slices/selectors';
+
 const List = styled.ul`
   margin: 0;
   padding: 0;
@@ -16,7 +18,8 @@ const ResponseWrapper = styled.div`
 `;
 
 const Response = () => {
-  const {currentResponse, requestError} = useSelector((state) => state.request);
+  const currentResponse = useSelector(currentResponseSelector);
+  const requestError = useSelector(requestErrorSelector);
   if (!currentResponse || requestError) {
     return null;
   }

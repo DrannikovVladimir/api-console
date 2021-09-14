@@ -9,6 +9,7 @@ import {
   removeRequest,
   addCurrentRequest
 } from '../store/slices/requestSlice';
+import { requestsSelector, dropdownSelector } from '../store/slices/selectors';
 
 const DropdownList = styled.ul`
   position: relative;
@@ -63,8 +64,8 @@ const DropdownButton = styled.button`
 
 const DropdownMenu = ({ onHide }) => {
   const dispatch = useDispatch();
-  const {id} = useSelector((state) => state.dropdown.dropdown);
-  const {requests} = useSelector((state) => state.request);
+  const {id} = useSelector(dropdownSelector);
+  const requests = useSelector(requestsSelector);
   const currentRequest = requests.find((r) => r.id === id);
 
   const handleRemove = (id) => () => {

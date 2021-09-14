@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {logout} from '../store/actions/auth';
 import FullscreenOpen from './icons/FullscreenOpen.jsx';
 import FullscreenClose from './icons/FullscreenClose';
+import {loginSelector, subloginSelector} from '../store/slices/selectors.js';
 
 const Container = styled.div`
   display: flex;
@@ -107,7 +108,8 @@ const ButtonFullScreen = styled.button`
 const Header = ({ handle }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const {login, sublogin} = useSelector((state) => state.auth);
+  const login = useSelector(loginSelector);
+  const sublogin = useSelector(subloginSelector);
 
   const handleLogout = () => {
     dispatch(logout());
