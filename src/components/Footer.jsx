@@ -6,16 +6,17 @@ import Button from './Button.jsx';
 import Format from './icons/Format.jsx'
 import { formatRequest } from '../store/slices/requestSlice';
 import { valueSelector } from '../store/slices/selectors.js';
+import text from '../constants/locales';
+import colors from '../constants/colors';
 
 const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-top: 15px; */
   padding: 11px;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid ${colors.borderColor};
 
-  background-color: #FFFFFF;
+  background-color: ${colors.primeColor};
 `;
 
 const LinkGithub = styled.a`
@@ -24,7 +25,7 @@ const LinkGithub = styled.a`
 
   font-size: 16px;
   line-height: 20px;
-  color: #999999;
+  color: ${colors.linkColor};
   text-decoration: none;
 
 &:before, &:after {
@@ -34,7 +35,7 @@ const LinkGithub = styled.a`
   height: 1px;
   bottom: 0;
   margin-top: -0.5px;
-  background: #999999;
+  background: ${colors.linkColor};
 }
 
 &:before {
@@ -42,7 +43,7 @@ const LinkGithub = styled.a`
 }
 &:after {
   right: 2.5px;
-  background: #999999;
+  background: ${colors.linkColor};
   transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -52,7 +53,7 @@ const LinkGithub = styled.a`
 }
 
 &:hover:before {
-  background: #999999;
+  background: ${colors.linkColor};
   width: 100%;
   transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -88,13 +89,13 @@ const ButtonFormat = styled.button.attrs({
   cursor: pointer;
 
   &:hover {
-    color: #0055FB;
+    color: ${colors.activeColor};
   }
 
   &:focus {
     outline: none;
-    color: #0055FB;
-    border-color: rgba(69, 165, 255, 0.5);
+    color: ${colors.activeColor};
+    border-color: ${colors.focusActiveColor};
   }
 `;
 
@@ -113,11 +114,11 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-      <ButtonSubmit formName="formConsole">Отправить</ButtonSubmit>
-      <LinkGithub href="https://github.com/DrannikovVladimir" target="_blank">@link-to-my-github</LinkGithub>
+      <ButtonSubmit formName="formConsole">{text.console.buttonSubmit}</ButtonSubmit>
+      <LinkGithub href="https://github.com/DrannikovVladimir" target="_blank">{text.console.githubLink}</LinkGithub>
       <ButtonFormat onClick={handleFormat}>
         <Format />
-        Форматировать
+        {text.console.buttonFormatting}
       </ButtonFormat>
     </FooterContainer>
   )

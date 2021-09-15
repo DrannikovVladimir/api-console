@@ -7,6 +7,8 @@ import {logout} from '../store/actions/auth';
 import FullscreenOpen from './icons/FullscreenOpen.jsx';
 import FullscreenClose from './icons/FullscreenClose';
 import {loginSelector, subloginSelector} from '../store/slices/selectors.js';
+import text from '../constants/locales';
+import colors from '../constants/colors';
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const Container = styled.div`
   padding: 10px 15px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
-  background-color: #F6F6F6;
+  background-color: ${colors.secondaryColor};
 ;
 `;
 
@@ -33,7 +35,7 @@ const UserAccount = styled.div`
   min-height: 30px;
   margin-right: 30px;
   padding: 5px 15px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid ${colors.borderColor};
   border-radius: 5px;
 
   font-size: 16px;
@@ -57,7 +59,7 @@ const ButtonExit = styled.button`
 
   background-color: transparent;
 
-  color: #0D0D0D;
+  color: ${colors.textColor};
   cursor: pointer;
 
   &::before {
@@ -88,20 +90,20 @@ const ButtonFullScreen = styled.button`
   border-radius: 7px;
   border: 2px solid transparent;
 
-  color: #0D0D0D;
+  color: ${colors.textColor};
   background-color: transparent;
 
   cursor: pointer;
 
   &:hover {
-    color: #0055FB;
+    color: ${colors.activeColor};
   }
 
   &:focus {
     outline: none;
-    border-color: rgba(69, 165, 255, 0.5);
+    border-color: ${colors.focusActiveColor};
 
-    color: #0055FB;
+    color: ${colors.activeColor};
   };
 `;
 
@@ -127,18 +129,22 @@ const Header = ({ handle }) => {
   return (
     <Container>
       <Logo src="/icons/logo.svg" alt="Логотип" />
-      <Title>API-консолька</Title>
+      <Title>{text.title}</Title>
       <UserAccount>
-        {sublogin ? `${login} : ${sublogin}` : login}
+        {sublogin
+          ? `${login} : ${sublogin}`
+          : login}
       </UserAccount>
-      <ButtonExit type="button" onClick={handleLogout}>Выйти</ButtonExit>
+      <ButtonExit type="button" onClick={handleLogout}>{text.console.buttonExit}</ButtonExit>
       <ButtonFullScreen
         fullScreen={handle.active}
         type="button"
         onClick={handleButtonClick}
       >
-        {handle.active ? <FullscreenClose /> : <FullscreenOpen />}
-        <span className="visually-hidden">Развернуть на полный экран</span>
+        {handle.active
+          ? <FullscreenClose />
+          : <FullscreenOpen />}
+        <span className="visually-hidden">{text.console.buttonFullscreen}</span>
       </ButtonFullScreen>
     </Container>
   )

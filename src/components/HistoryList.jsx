@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import HistoryItem from './HistoryItem.jsx';
 import { requestsSelector } from '../store/slices/selectors.js';
+import text from '../constants/locales';
 
 const List = styled.ul`
   display: flex;
@@ -28,7 +29,7 @@ const HistoryList = () => {
   const requests = useSelector(requestsSelector);
 
   if (requests.length === 0) {
-    return <HistoryFeedback>Список запросов пуст</HistoryFeedback>;
+    return <HistoryFeedback>{text.console.emptyList}</HistoryFeedback>;
   }
 
   return (

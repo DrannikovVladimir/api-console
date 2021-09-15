@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
 import FormLogin from '../components/FormLogin.jsx';
+import text from '../constants/locales';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -41,7 +42,7 @@ function LoginPage() {
     <Wrapper>
       <LogoStyled src="/icons/logo.svg" alt="" />
       <FormContainer>
-        <Title>API-консолька</Title>
+        <Title>{text.title}</Title>
         <FormLogin />
       </FormContainer>
     </Wrapper>

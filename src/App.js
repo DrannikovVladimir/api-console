@@ -8,7 +8,6 @@ import LoginPage from 'src/containers/LoginPage.jsx';
 import ConsolePage from 'src/containers/ConsolePage.jsx';
 
 const {store, persistor} = createStore();
-console.log(localStorage);
 
 const ConsoleRoute = ({children, path}) => {
   const authData = JSON.parse(localStorage.getItem('persist:auth'));
@@ -20,8 +19,6 @@ const ConsoleRoute = ({children, path}) => {
   );
 };
 
-// console.log(document.cookie);
-// console.log(store.getState());
 function App() {
   return (
     <Router>

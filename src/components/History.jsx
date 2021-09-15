@@ -7,14 +7,16 @@ import HistoryList from './HistoryList.jsx';
 import { resetRequests } from '../store/slices/requestSlice.js';
 import { closeDropdown } from '../store/slices/dropdownSlice.js';
 import { dropdownSelector } from '../store/slices/selectors.js';
+import text from '../constants/locales';
+import colors from '../constants/colors';
 
 const Container = styled.div`
   position: relative;
 
   padding-left: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid ${colors.borderColor};
 
-  background-color: #f6f6f6;
+  background-color: ${colors.secondaryColor};
 `;
 
 const ButtonReset = styled.button`
@@ -31,7 +33,7 @@ const ButtonReset = styled.button`
   border-left: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(107, 107, 107, 0.2);
 
-  background-color: #f6f6f6;
+  background-color: ${colors.secondaryColor};
 
   box-shadow: -12px 0 10px 0 rgba(246, 246, 246, 0.8);
 
@@ -88,8 +90,15 @@ const History = () => {
       <HistoryWrapper ref={historyWrapperRef}>
         <HistoryList />
       </HistoryWrapper>
-      <ButtonReset onClick={handleReset} />
-      <Dropdown left={coords?.left} top={coords?.top} width={coords?.width} height={coords?.height} />
+      <ButtonReset onClick={handleReset}>
+        <span className="visually-hidden">{text.console.buttonReset}</span>
+      </ButtonReset>
+      <Dropdown
+        left={coords?.left}
+        top={coords?.top}
+        width={coords?.width}
+        height={coords?.height}
+      />
     </Container>
   );
 };

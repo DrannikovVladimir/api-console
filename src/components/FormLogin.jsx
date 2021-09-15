@@ -9,6 +9,8 @@ import {authenticate} from '../store/actions/auth';
 import Button from '../components/Button.jsx';
 import Loader from './icons/Loader.jsx';
 import { isLoggedInSelector, authErrorSelector } from '../store/slices/selectors.js';
+import text from '../constants/locales';
+import colors from '../constants/colors';
 
 const FormGroup = styled.div`
   position: relative;
@@ -23,7 +25,7 @@ const Label = styled.label`
 
   font-size: 16px;
   line-height: 20px;
-  color: ${(props) => props.validateError || '#0D0D0D'};
+  color: ${(props) => props.validateError || colors.textColor};
 `;
 
 const Input = styled.input`
@@ -31,18 +33,18 @@ const Input = styled.input`
   padding: 5px 10px;
   border-width: 1px;
   border-style: solid ;
-  border-color: ${(props) => props.validateError || 'rgba(0, 0, 0, 0.2)'};
+  border-color: ${(props) => props.validateError || colors.borderColor};
   border-radius: 5px;
 
   font: inherit;
 
   &:hover {
-    border-color: ${(props) => props.validateError || 'rgba(0, 0, 0, 0.4)'};
+    border-color: ${(props) => props.validateError || colors.boxShadowColor};
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 2px ${colors.borderColor};
   }
 `;
 
@@ -53,7 +55,7 @@ const SubloginLabel = styled.span`
 
   font-size: 12px;
   line-height: 20px;
-  color: #999999;
+  color: ${colors.linkColor};
 `;
 
 const FeedbackError = styled.div`
@@ -62,9 +64,9 @@ const FeedbackError = styled.div`
   padding: 10px 40px;
   border-radius: 5px;
 
-  background-color: #CF2C001A;
+  background-color: rgba(207, 44, 0, 0.1);
 
-  color: #CF2C00;
+  color: ${colors.dangerColor};
   font-size: 12px;
   line-height: 20px;
 
@@ -79,7 +81,7 @@ const FeedbackTitle = styled.h2`
   line-height: 30px;
   font-weight: 400;
 
-  color: #CF2C00;
+  color: ${colors.dangerColor};
 
   &::after {
     content: '';
@@ -139,22 +141,24 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      {error ? (
-        <FeedbackError>
-          <FeedbackTitle>Вход не вышел</FeedbackTitle>
-          {error}
-        </FeedbackError>
-      ) : null}
+      {error
+        ? (
+          <FeedbackError>
+            <FeedbackTitle>{text.formLogin.error}</FeedbackTitle>
+            {error}
+          </FeedbackError>
+          )
+        : null}
       <FormGroup className="login-form__group">
         <Label
-          validateError={(formik.errors.login && formik.touched.login) && '#CF2C00'}
+          validateError={(formik.errors.login && formik.touched.login) && colors.dangerColor}
           htmlFor="login"
           className="login-form__label"
         >
-          Логин
+          {text.formLogin.login}
         </Label>
         <Input
-          validateError={(formik.errors.login && formik.touched.login) && '#CF2C00'}
+          validateError={(formik.errors.login && formik.touched.login) && colors.dangerColor}
           className="login-form__input"
           type="text"
           id="login"
@@ -164,8 +168,13 @@ const LoginForm = () => {
         />
       </FormGroup>
       <FormGroup className="login-form__group">
-        <SubloginLabel>Опционально</SubloginLabel>
-        <Label htmlFor="sublogin" className="login-form__label">Сублогин</Label>
+        <SubloginLabel>{text.formLogin.label}</SubloginLabel>
+        <Label
+          htmlFor="sublogin"
+          className="login-form__label"
+        >
+          {text.formLogin.sublogin}
+        </Label>
         <Input
           className="sublogin-form__input"
           type="text"
@@ -177,14 +186,14 @@ const LoginForm = () => {
       </FormGroup>
       <FormGroup className="login-form__group">
         <Label
-          validateError={(formik.errors.password && formik.touched.password) && '#CF2C00'}
+          validateError={(formik.errors.password && formik.touched.password) && colors.dangerColor}
           htmlFor="password"
           className="login-form__label"
         >
-          Пароль
+          {text.formLogin.password}
         </Label>
         <Input
-          validateError={(formik.errors.password && formik.touched.password) && '#CF2C00'}
+          validateError={(formik.errors.password && formik.touched.password) && colors.dangerColor}
           className="login-form__input"
           type="password"
           id="password"
@@ -195,7 +204,9 @@ const LoginForm = () => {
       </FormGroup>
       <Button type="submit" disabled={(formik.errors.login && formik.touched.login)
         || (formik.errors.password && formik.touched.password)}>
-        {formik.isSubmitting && formik.isValid && !error ? <Loader /> : 'Войти'}
+        {formik.isSubmitting && formik.isValid && !error
+          ? <Loader />
+          : text.formLogin.button }
       </Button>
     </form>
   );

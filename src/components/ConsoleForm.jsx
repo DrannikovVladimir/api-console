@@ -8,12 +8,13 @@ import Request from './Request.jsx';
 import Response from './Response.jsx';
 import Footer from './Footer.jsx';
 import Dots from './icons/Dots.jsx';
+import colors from '../constants/colors';
 
 const FieldsContainer = styled.div`
   padding: 10px 15px;
   height: calc(100vh - 166px);
 
-  background-color: #FFFFFF;
+  background-color: ${colors.primeColor};
 `;
 
 const FieldsContainerWrapper = styled.div`
@@ -39,7 +40,9 @@ const RequestContainer = styled.div`
   height: calc(100% - 35px);
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
+  border-color: ${(props) => props.isValid
+    ? colors.dangerColor
+    : colors.borderColor};
   border-radius: 5px;
 `;
 
@@ -48,7 +51,9 @@ const ResponseContainer = styled.div`
   padding: 10px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => props.isValid ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)'};
+  border-color: ${(props) => props.isValid
+    ? colors.dangerColor
+    : colors.borderColor};
   border-radius: 5px;
   overflow-y: hidden;
 
@@ -62,7 +67,9 @@ const Label = styled.label`
   font-weight: 400;
   font-size: 12px;
   line-height: 20px;
-  color: ${(props) => props.isValid ? '#CF2C00' : '#999999'};
+  color: ${(props) => props.isValid
+    ? colors.dangerColor
+    : '#999999'};
 `;
 
 const ButtonDrag = styled.button`
@@ -86,7 +93,6 @@ const getValidate = (value) => {
     JSON.parse(value);
     return false;
   } catch(err) {
-    // console.log(err);
     errors.json = 'Невалидный JSON';
   }
   return errors;
@@ -102,7 +108,7 @@ const ConsoleForm = () => {
   const [isValid, setIsValid] = useState(false);
   const validate = getValidate(value);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsValid(false);
     if (validate) {
@@ -174,9 +180,15 @@ const ConsoleForm = () => {
     return (() => buttonDrag.removeEventListener('mousedown', handleDown));
   }, [dispatch]);
 
-  const requestWidth = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
-  const buttonPositionLeft = resizeCoord ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 10px)` : 'calc(50% - 10px)';
-  const responseWidth = resizeCoord ? `calc(${(resizeCoord.width - resizeCoord.x) * 100 / resizeCoord.width}% - 5px)` : 'calc(50% - 5px)';
+  const requestWidth = resizeCoord
+    ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 5px)`
+    : 'calc(50% - 5px)';
+  const buttonPositionLeft = resizeCoord
+    ? `calc(${resizeCoord.x * 100 / resizeCoord.width}% - 10px)`
+    : 'calc(50% - 10px)';
+  const responseWidth = resizeCoord
+    ? `calc(${(resizeCoord.width - resizeCoord.x) * 100 / resizeCoord.width}% - 5px)`
+    : 'calc(50% - 5px)';
 
   return (
     <>
@@ -194,7 +206,9 @@ const ConsoleForm = () => {
           <InnerResponseContainer style={{width: responseWidth}}>
             <Label isValid={!!requestError}>Ответ:</Label>
             <ResponseContainer ref={responseRef} isValid={!!requestError}>
-              {isValid ? <span>{validate.json}</span> : null}
+              {isValid
+                ? <span>{validate.json}</span>
+                : null}
               <Response />
             </ResponseContainer>
           </InnerResponseContainer>

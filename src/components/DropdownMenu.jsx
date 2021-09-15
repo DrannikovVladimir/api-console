@@ -10,6 +10,8 @@ import {
   addCurrentRequest
 } from '../store/slices/requestSlice';
 import { requestsSelector, dropdownSelector } from '../store/slices/selectors';
+import text from '../constants/locales';
+import colors from '../constants/colors';
 
 const DropdownList = styled.ul`
   position: relative;
@@ -32,7 +34,7 @@ const DropdownList = styled.ul`
     width: auto;
     height: 1px;
 
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: ${colors.borderColor};
   }
 `;
 
@@ -57,7 +59,9 @@ const DropdownButton = styled.button`
   background-color: transparent;
 
   &:hover {
-    color: ${(props) => props.color ? '#FFFFFF' : '#0D0D0D'};
+    color: ${(props) => props.color
+      ? colors.primeColor
+      : colors.textColor};
     background-color: ${(props) => props.color || 'transparent'};
   }
 `;
@@ -91,20 +95,20 @@ const DropdownMenu = ({ onHide }) => {
       <DropdownItem
         marginTop="5px"
       >
-        <DropdownButton onClick={handleAddCurrentRequest}>Выполнить</DropdownButton>
+        <DropdownButton onClick={handleAddCurrentRequest}>{text.dropdown.execute}</DropdownButton>
       </DropdownItem>
       <CopyToClipboard text={currentRequest?.query} onCopy={handleCopy(id)}>
         <DropdownItem
           marginBottom="5px"
         >
-          <DropdownButton color="#0055FB">Скопировать</DropdownButton>
+          <DropdownButton color={colors.activeColor}>{text.dropdown.copy}</DropdownButton>
         </DropdownItem>
         </CopyToClipboard>
       <DropdownItem
         marginTop="6px"
         marginBottom="5px"
       >
-        <DropdownButton onClick={handleRemove(id)} color="#CF2C00">Удалить</DropdownButton>
+        <DropdownButton onClick={handleRemove(id)} color={colors.dangerColor}>{text.dropdown.remove}</DropdownButton>
       </DropdownItem>
     </DropdownList>
   )
