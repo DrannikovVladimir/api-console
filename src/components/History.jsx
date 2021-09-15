@@ -30,8 +30,7 @@ const ButtonReset = styled.button`
   height: 50px;
   margin-left: auto;
   border: none;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(107, 107, 107, 0.2);
+  border-left: 1px solid ${colors.borderColor};
 
   background-color: ${colors.secondaryColor};
 

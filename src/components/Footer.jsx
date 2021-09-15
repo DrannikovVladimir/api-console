@@ -85,7 +85,7 @@ const ButtonFormat = styled.button.attrs({
 
   background-color: transparent;
 
-  color: #0D0D0D;
+  color: ${colors.textColor};
   cursor: pointer;
 
   &:hover {

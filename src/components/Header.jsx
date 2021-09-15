@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid ${colors.borderColor};
 
   background-color: ${colors.secondaryColor};
 ;
@@ -46,7 +46,6 @@ const UserAccount = styled.div`
 const ButtonExit = styled.button`
   position: relative;
 
-  display: inline-block;
   width: 80px;
   min-height: 24px;
   margin-right: 30px;
