@@ -14,7 +14,7 @@ const ConsoleRoute = ({children, exact, path}) => {
 
   return (
     <Route path={path} exact={exact}>
-      {authData.sessionKey !== 'null' ? children : <Redirect to="/login" />}
+      {authData?.sessionKey !== 'null' ? children : <Redirect to="/login" />}
     </Route>
   );
 };
