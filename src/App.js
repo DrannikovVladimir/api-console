@@ -9,12 +9,12 @@ import ConsolePage from 'src/containers/ConsolePage.jsx';
 
 const {store, persistor} = createStore();
 
-const ConsoleRoute = ({children, path}) => {
+const ConsoleRoute = ({children, exact, path}) => {
   const authData = JSON.parse(localStorage.getItem('persist:auth'));
 
   return (
-    <Route path={path}>
-      {!!authData.sessionKey ? children : <Redirect to="/" />}
+    <Route path={path} exact={exact}>
+      {authData.sessionKey !== 'null' ? children : <Redirect to="/login" />}
     </Route>
   );
 };
@@ -25,12 +25,12 @@ function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Switch>
-            <Route exact path="/">
-              <LoginPage />
-            </Route>
-            <ConsoleRoute path="/console">
+            <ConsoleRoute exact path="/">
               <ConsolePage />
             </ConsoleRoute>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
           </Switch>
         </PersistGate>
       </Provider>

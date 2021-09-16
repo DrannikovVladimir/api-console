@@ -14,7 +14,6 @@ export default {
   auth: handleActions(
     {
       [ActionTypes.AUTHENTICATE]: (state) => {
-        console.log('AUTHENTICATE');
         return {
           ...state,
           loading: true,
@@ -22,7 +21,6 @@ export default {
         };
       },
       [ActionTypes.AUTHENTICATE_SUCCESS]: (state, {payload}) => {
-        console.log('AUTHENTICATE_SUCCESS');
         return {
           ...state,
           loading: false,
@@ -33,7 +31,6 @@ export default {
         };
       },
       [ActionTypes.AUTHENTICATE_FAILURE]: (state, {payload}) => {
-        console.log('AUTHENTICATE_FAILURE');
         let error = null;
         if (payload) {
           const { id, explain } = payload;
@@ -50,7 +47,6 @@ export default {
         };
       },
       [ActionTypes.LOGOUT]: (state) => {
-        console.log('LOGOUT');
         return {
           ...state,
           loading: false,

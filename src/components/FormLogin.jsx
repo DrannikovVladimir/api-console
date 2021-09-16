@@ -135,7 +135,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (!!isLoggedIn) {
-      history.push('/console');
+      history.push('/');
     }
   }, [isLoggedIn, history]);
 

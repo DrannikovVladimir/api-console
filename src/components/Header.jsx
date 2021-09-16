@@ -114,7 +114,7 @@ const Header = ({ handle }) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    history.push('/');
+    history.push('/login');
   }
 
   const handleButtonClick = () => {
