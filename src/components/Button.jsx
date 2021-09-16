@@ -46,9 +46,11 @@ const ButtonStyled = styled.button.attrs({
   }
 `;
 
-const Button = ({children, formName}) => {
+const Button = ({children, formName, disabled}) => {
   return (
-    <ButtonStyled form={formName}>{children}</ButtonStyled>
+    <ButtonStyled form={formName} disabled={disabled}>
+      {children}
+    </ButtonStyled>
   );
 };
 
