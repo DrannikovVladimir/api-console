@@ -1,61 +1,58 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {useSelector} from 'react-redux';
-import _ from 'lodash';
 
 import { currentResponseSelector, requestErrorSelector } from '../store/slices/selectors';
-
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-  overflow-wrap: break-word;
-
-  list-style: none;
-`;
+import colors from '../constants/colors.js';
 
 const ResponseWrapper = styled.div`
   padding-bottom: 20px;
+  height: 100%;
+  overflow: hidden;
+`;
+
+const TextArea = styled.textarea`
+  display: block;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  resize: none;
+
+  overflow: hidden;
+
+  outline: none;
+
+  &:disabled {
+    color: ${colors.textColor};
+    background-color: transparent;
+  }
 `;
 
 const Response = () => {
+  const wrapperRef = useRef();
+  const textareaRef = useRef();
   const currentResponse = useSelector(currentResponseSelector);
   const requestError = useSelector(requestErrorSelector);
-  if (!currentResponse || requestError) {
-    return null;
-  }
 
+  useEffect(() => {
+    const el = wrapperRef.current;
+    const textArea = textareaRef.current;
+    const handleTextarea = (evt) => {
+      evt.preventDefault();
+      textArea.scrollTop += evt.deltaY;
+    }
+    el.addEventListener('wheel', handleTextarea);
 
-  const renderResponse = () => {
-    return (
-      <List>
-        {Object.entries(currentResponse).map(([key, value]) => {
-          if (typeof value === 'object') {
-            return (
-              <ul key={_.uniqueId()}>
-                {Object.entries(value).map(([innerKey, innerValue], index) => (
-                  <li key={`000${index + 1}`}>{innerKey}: {innerValue}</li>
-                ))}
-              </ul>
-            )
-          }
-          return (
-            <li key={_.uniqueId()}>
-              <span>
-                {key}
-              </span>
-              {': '}
-              <span>
-                {value}
-              </span>
-            </li>
-          )
-        })}
-      </List>
-    )
-  };
+    return (() => el.removeEventListener('wheel', handleTextarea));
+  }, []);
 
   return (
-    <ResponseWrapper>{renderResponse()}</ResponseWrapper>
+    <ResponseWrapper ref={wrapperRef}>
+      <TextArea ref={textareaRef} defaultValue={!(!currentResponse || requestError)
+        ? JSON.stringify(currentResponse, undefined, 4)
+        : ''} disabled={true} />
+    </ResponseWrapper>
   );
 };
 

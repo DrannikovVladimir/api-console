@@ -14,7 +14,7 @@ const ButtonStyled = styled.button.attrs({
   border: none;
   border-radius: 5px;
 
-  font-weight: 50;
+  font-weight: 400;
   font-size: 16px;
   text-align: center;
   color: ${colors.primeColor};
