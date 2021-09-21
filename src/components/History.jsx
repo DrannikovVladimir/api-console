@@ -76,6 +76,7 @@ const History = () => {
     const el = historyWrapperRef.current;
     const handleWheel = (evt) => {
       evt.preventDefault();
+      evt.stopPropagation();
       el.scrollLeft += evt.deltaY;
       dispatch(closeDropdown());
     };
