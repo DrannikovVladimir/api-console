@@ -58,7 +58,8 @@ Password: oori9Gaer
 ## Технологии   
 
 * React   
-* Redux / Redux@Toolkit   
+* Redux Toolkit   
+* Redux Saga
 * Formik   
 * React Router Dom   
 * Styled Components 
