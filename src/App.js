@@ -9,12 +9,24 @@ import ConsolePage from 'src/containers/ConsolePage.jsx';
 
 const {store, persistor} = createStore();
 
+const getAuth = (authData) => {
+  if (!authData) {
+    return false;
+  }
+
+  return authData.sessionKey !== 'null';
+}
+
 const ConsoleRoute = ({children, exact, path}) => {
   const authData = JSON.parse(localStorage.getItem('persist:auth'));
+  const auth = getAuth(authData);
+  console.log(auth);
 
   return (
     <Route path={path} exact={exact}>
-      {authData?.sessionKey !== 'null' ? children : <Redirect to="/login" />}
+      {auth
+        ? children
+        : <Redirect to="/login" />}
     </Route>
   );
 };
