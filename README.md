@@ -49,15 +49,15 @@
 ## Примеры валидных запросов   
    
 ```sh
-{"action": "ping"}   
+{"action": "pong"}   
 {"action": "ping"}   
 {"action": "sys.settings.get"}  
 ``` 
    
 ## Данные для авторизации   
    
-Login: krowen@inbox.ru   
-Password: oori9Gaer 
+Логин: krowen@inbox.ru   
+Пароль: oori9Gaer 
    
 
 ## Установка   
