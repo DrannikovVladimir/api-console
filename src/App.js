@@ -20,7 +20,6 @@ const getAuth = (authData) => {
 const ConsoleRoute = ({children, exact, path}) => {
   const authData = JSON.parse(localStorage.getItem('persist:auth'));
   const auth = getAuth(authData);
-  console.log(auth);
 
   return (
     <Route path={path} exact={exact}>
